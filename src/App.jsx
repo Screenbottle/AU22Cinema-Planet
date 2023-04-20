@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app'
+import { Route, Routes } from 'react-router'
 
 function App() {
   // Your web app's Firebase configuration
@@ -23,7 +22,9 @@ function App() {
 
   return (
     <div className="App">
-      
+      <Routes>
+        
+      </Routes>
     </div>
   )
 }
