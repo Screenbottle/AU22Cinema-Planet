@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { initializeApp } from 'firebase/app'
 import { Route, Routes } from 'react-router'
+import MovieDetails from './components/MovieDetails';
 
 function App() {
   // Your web app's Firebase configuration
@@ -23,7 +24,10 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        
+
+        <Route path='/movie/:movie_id' element={
+          <MovieDetails />
+        }/>
       </Routes>
     </div>
   )
