@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { initializeApp } from "firebase/app";
+import responseExample from './responseExample';
 
 function App() {
   // Your web app's Firebase configuration
@@ -21,28 +22,33 @@ function App() {
     setApp(initializeApp(firebaseConfig));
   }, [])
 
+  // all info regarding base urls and size settings can be found with the API call for configuration
+  // sizes for backdrops: "w300", "w780", "w1280", "original"
+  // sizes for company logos: "w45", "w92", "w154", "w185", "w300", "w500", "original"
+  // sizes for posters: "w92", "w154", "w185", "w342", "w500", "w780", "original"
+  // sizes for profiles: "w45", "w185", "h632", "original"
+  // sizes for stills: "w92", "w185", "w300", "original"
+
+  // the url for an image is constructed from 3 components, the base url, the size, and the image key
+  // this example function takes in the key for an image and a size, and returns a url for the image
+  const createImageUrl = (key, size) => {
+    const url = `http://image.tmdb.org/t/p/${size}${key}`
+
+    return url;
+  }
+
+  
+
+
+  const createImg = (url) => {
+    return (
+      <img src='url'/>
+    )
+  }
+
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      
     </div>
   )
 }
