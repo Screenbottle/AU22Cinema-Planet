@@ -1,0 +1,57 @@
+.movie__list {
+  margin: 20px auto;
+  width: 90%;
+  max-width: 1200px;
+}
+
+.list__title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.list__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 20px;
+}
+.movie- {
+  margin: 20px;
+}
+
+.list-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.list-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.movie-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.movie-poster {
+  width: 100%;
+  height: auto;
+}
+
+.movie-info {
+  padding: 10px;
+}
+
+.movie-title {
+  font-size: 18px;
+  margin: 0;
+}
+
+.movie-release-date,
+.movie-rating {
+  margin: 5px 0;
+  font-size: 14px;
+  color: white;
+}
