@@ -1,0 +1,73 @@
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.list-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 16px 0;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.movie-grid li {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+  overflow: hidden;
+}
+
+.movies-grid li:hover {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.movie-grid li img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  transition: all 0.2s ease-in-out;
+}
+
+.movie-info {
+  padding: 16px;
+}
+
+.movie-info h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 8px 0;
+}
+
+.movie-list h2 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.movie-info-item span {
+  color: #fff6f6;
+  font-family: 'Times New Roman', Times, serif;
+}
+.rating {
+  display: inline-block;
+ 
+  line-height: 1;
+  color: #d3d3d3; /* default color for unfilled stars */
+}
+.star {
+  display: inline-block;
+  color: #ffd700; /* default color for filled stars */
+}
+.star.filled {
+  color: #f7d000; /* color for filled stars */
+}

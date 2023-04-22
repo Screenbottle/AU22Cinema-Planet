@@ -9,7 +9,7 @@ const Header = () => {
         <Link to="/">
           <img
             className="header__icon"
-            src="https://freepngimg.com/thumb/space/24578-1-space-planet-transparent-background.png"
+            src="https://raw.githubusercontent.com/alex88g/Images/main/Images/earth3.png"
             alt="Logo"
           />
         </Link>

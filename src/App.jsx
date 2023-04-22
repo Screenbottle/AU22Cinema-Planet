@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Home from './pages/home/home'
-import Header from './components/header/Header'
-import MovieList from './components/movieList/movieList'
+import { HashRouter, Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import Header from './components/Header'
+import MovieList from './components/MovieList'
 
 
 import { initializeApp } from 'firebase/app'
@@ -26,17 +26,13 @@ function App() {
 
   return (
     <div className="App">
-      <Router>
+      <HashRouter>
         <Header />
         <Routes>
-          <Route index element={<Home />} />
-          <Route path="movie/:id" element={<h1>Movie</h1>} />
-          <Route path="movies/:type" element={<MovieList />} />
-          <Route path="/*" element={<h1>Error Page</h1>} />
-          
-         
+          <Route exact path="/" element={<Home />}></Route>
+          <Route path="movies/:type" element={<MovieList />}></Route>
         </Routes>
-      </Router>
+        </HashRouter>
     </div>
   );
 }
