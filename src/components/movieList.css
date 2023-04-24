@@ -62,12 +62,31 @@ a {
   display: inline-block;
  
   line-height: 1;
-  color: #d3d3d3; /* default color for unfilled stars */
+  color: #d3d3d3; 
 }
 .star {
   display: inline-block;
-  color: #ffd700; /* default color for filled stars */
+  color: #ffd700; 
 }
 .star.filled {
-  color: #f7d000; /* color for filled stars */
+  color: #f7d000; 
+}
+.movie-list h2 {
+  margin-left: 20px;
+}
+
+.movies-grid {
+  margin-bottom: 30px; 
+}
+.header__icon {
+  margin: 10px 20px 10px 0; /* top, right, bottom, left */
+}
+
+.movie-link {
+  margin: 10px 20px; /* top/bottom, left/right */
+}
+
+.movie-link span {
+  display: inline-block;
+  margin: 0 10px; /* top/bottom, left/right */
 }
