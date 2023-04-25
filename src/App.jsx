@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { initializeApp } from 'firebase/app'
-import { Route, Routes } from 'react-router'
+
 import MovieDetails from './components/MovieDetails';
+import MovieNotFound from './components/MovieNotFound';
+import { Route, Router, Routes } from 'react-router-dom';
 
 function App() {
   // Your web app's Firebase configuration
@@ -15,20 +17,24 @@ function App() {
     appId: "1:271914838545:web:4851c4d8fc1a38eaa5dfb0"
   };
 
-  const [app, setApp] = useState(null)
+  //const [app, setApp] = useState(null)
 
-  useEffect(() => {
-    setApp(initializeApp(firebaseConfig));
-  }, [])
+  //useEffect(() => {
+    //setApp(initializeApp(firebaseConfig));
+  //}, [])
 
   return (
     <div className="App">
       <Routes>
+        <Route path='/' element={
+          <MovieNotFound />
+        }/>
 
         <Route path='/movie/:movie_id' element={
           <MovieDetails />
         }/>
       </Routes>
+      
     </div>
   )
 }

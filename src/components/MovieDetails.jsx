@@ -28,7 +28,7 @@ const MovieDetails = () => {
 
     useEffect(() => {
         if (detailsCallDone && trailerCallDone) {
-            
+            createContent();
         }
     }, [detailsCallDone, trailerCallDone])
 
@@ -67,13 +67,33 @@ const MovieDetails = () => {
 
     }
 
-    const createDetails = () => {
+    const createContent = () => {
+
+        const title = details.original_title;
+        const overview = details.overview;
+        const genres = [];
+        details.genres.forEach(genre => {
+            genres.push(genre.name);
+        });
+        const language = details.original_language;
+        const poster = createImageUrl('w780', details.poster_path);
+
+        const companyLogos = [];
+        details.production_companies.forEach(company => {
+            companyLogos.push(createImageUrl('w154', company.logo_path));
+        });
+
 
         return (
             <div>
                 Details go here
             </div>
         )
+    }
+
+    const createImageUrl = (key, size) => {
+        const url = `http://image.tmdb.org/t/p/${size}${key}`
+        return url;
     }
 
 
