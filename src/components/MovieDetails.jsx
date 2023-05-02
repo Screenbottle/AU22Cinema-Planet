@@ -6,7 +6,7 @@ import ErrorPage from "./ErrorPage";
 
 
 const MovieDetails = () => {
-    const apiKey = 'place key here';
+    const apiKey = 'key_here';
     const baseUrl = 'https://api.themoviedb.org/3/movie/';
 
     const params = useParams();
@@ -17,8 +17,8 @@ const MovieDetails = () => {
     const [details, setDetails] = useState(null);
     const [trailers, setTrailers] = useState(null);
     const [recMovies, setRecMovies] = useState(null);
-    const [recMoviePages, setRecMoviePages] = useState(null);
     const [recPage, setRecPage] = useState(0);
+    const [recPageCount, setRecPageCount] = useState(0);
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -39,7 +39,7 @@ const MovieDetails = () => {
         const recommendationsUrl = `${baseUrl}${movie_id}/recommendations?api_key=${apiKey}&language=en-US`;
 
         try {  
-            const [detailsResult, trailerResult, recResponse ] = await Promise.all([
+            const [detailsResult, trailerResult, recResponse] = await Promise.all([
                 fetch(detailsUrl).then(res => res.json()),
                 fetch(trailerUrl).then(res => res.json()),
                 fetch(recommendationsUrl).then(res => res.json())
@@ -48,7 +48,6 @@ const MovieDetails = () => {
             setDetails(detailsResult);
             setTrailers(trailerResult.results);
             setRecMovies(recResponse.results);
-            createRecMoviePages();
             setIsLoading(false);
             
         } catch (error) {
@@ -56,19 +55,6 @@ const MovieDetails = () => {
                 <ErrorPage errorCode={error}/>
             )
         }
-    }
-
-    const createRecMoviePages = () => {
-        const tempRecMoviePages = [];
-        const size = 5;
-
-        for (let i = 0; i < recMovies.length; i += size) {
-            const chunk = recMovies.slice(i, i + size);
-            tempRecMoviePages.push(chunk);
-        }
-
-        setRecMoviePages(tempRecMoviePages);
-
     }
 
     useEffect(() => {
@@ -107,6 +93,7 @@ const MovieDetails = () => {
         const voteCount = details.vote_count;
         
         const trailerElements = createTrailers();
+
         const recElement = createRecElement();
 
         return (
@@ -169,6 +156,16 @@ const MovieDetails = () => {
 
         const recPageElements = [];
 
+        const recMoviePages = [];
+        const size = 5;
+
+        for (let i = 0; i < recMovies.length; i += size) {
+            const chunk = recMovies.slice(i, i + size);
+            recMoviePages.push(chunk);
+        }
+
+        setRecPageCount(recMoviePages.length);
+
         
         recMoviePages.forEach(page => {
             const movieElements = [];
@@ -211,30 +208,34 @@ const MovieDetails = () => {
             <div className="recMoviesElement">
                 <button onClick={prevPage}>Left</button>
                 <div className="recPages">
-                    {recPageElements}
+                    {recPageElements[recPage]}
                 </div>
                 <button onClick={nextPage}>Right</button>
             </div>
         );
 
-        const nextPage = () => {
-            if (recPage < recMoviePages.length) {
-                setRecPage(recPage + 1);
-            }
-            else {
-                setRecPage(0);
-            }
 
-        }
-
-        const prevPage = () => {
-            if (recPage > 0) {
-                setRecPage(recPage - 1);
-            }
-        }
 
         return recMoviesElement;
     }
+
+
+    const nextPage = () => {
+        if (recPage < recPageCount.length) {
+            setRecPage(recPage + 1);
+        }
+        else {
+            setRecPage(0);
+        }
+
+    }
+
+    const prevPage = () => {
+        if (recPage > 0) {
+            setRecPage(recPage - 1);
+        }
+    }
+
 
     const createTrailers = () => {
         const trailerLinks = [];
