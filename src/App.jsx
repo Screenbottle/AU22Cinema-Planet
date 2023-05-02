@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { initializeApp } from "firebase/app";
+import MovieSearch from './MovieSearch';
 
 function App() {
   // Your web app's Firebase configuration
@@ -23,7 +24,7 @@ function App() {
 
   return (
     <div className="App">
-      
+      <MovieSearch />
     </div>
   )
 }
