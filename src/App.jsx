@@ -33,6 +33,8 @@ function App() {
         <Route path='/movie/:movie_id' element={
           <MovieDetails />
         }/>
+
+
       </Routes>
       
     </div>

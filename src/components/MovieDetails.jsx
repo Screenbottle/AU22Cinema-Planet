@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import MovieNotFound from "./MovieNotFound";
+import './MovieDetails.css'
+import ErrorPage from "./ErrorPage";
 
 
 const MovieDetails = () => {
-    const apiKey = 'put api key here';
+    const apiKey = 'place key here';
     const baseUrl = 'https://api.themoviedb.org/3/movie/';
 
     const params = useParams();
@@ -13,59 +15,49 @@ const MovieDetails = () => {
 
     const [details, setDetails] = useState(null);
     const [trailers, setTrailers] = useState(null);
+    const [recMovies, setRecMovies] = useState(null);
     const [movieId, setMovieId] = useState(null);
 
-    const [detailsCallDone, setDetailsCallDone] = useState(false);
-    const [trailerCallDone, setTrailerCallDone] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        
         if ('movie_id' in params) {
-            setMovieId(params.movie_id)
-            getMovieDetails(params.movie_id);
-            getMovieTrailers(params.movie_id);
+            fetchData(params.movie_id);
         }
+
+        
     }, [])
 
+    const fetchData = async (movie_id) => {
+        const detailsUrl = `${baseUrl}${movie_id}?api_key=${apiKey}&language=en-US`;
+        const trailerUrl = `${baseUrl}${movie_id}/videos?api_key=${apiKey}&language=en-US`;
+        const recommendationsUrl = `${baseUrl}${movie_id}/recommendations?api_key=${apiKey}&language=en-US`;
+
+        try {  
+            const [detailsResult, trailerResult, recResponse ] = await Promise.all([
+                fetch(detailsUrl).then(res => res.json()),
+                fetch(trailerUrl).then(res => res.json()),
+                fetch(recommendationsUrl).then(res => res.json())
+            ]);
+
+            setDetails(detailsResult);
+            setTrailers(trailerResult.results);
+            setRecMovies(recResponse.results);
+            setIsLoading(false);
+            
+        } catch (error) {
+            setContent(
+                <ErrorPage errorCode={error}/>
+            )
+        }
+    }
+
     useEffect(() => {
-        if (detailsCallDone && trailerCallDone) {
-            createContent();
+        if (!isLoading) {
+            setContent(createContent());
         }
-    }, [detailsCallDone, trailerCallDone])
-
-    const getMovieDetails = async (movie_id) => {
-        const url = `${baseUrl}${movie_id}?api_key=${apiKey}&language=en-US`
-
-        const response = await fetch(url);
-        const data = response.json();
-
-        if (data.status_code === 34) {
-            putErrorPage();
-        }
-        else {
-            setDetails(data);
-            setDetailsCallDone(true);
-        }
-    }
-
-    const getMovieTrailers = async (movie_id) => {
-        const url = `${baseUrl}${movie_id}/videos?api_key=${apiKey}&language=en-US`
-
-        const response = await fetch(url);
-        const data = response.json();
-
-
-        if (data.status_code === 34) {
-            putErrorPage();
-        }
-        else {
-            setTrailers(data.results);
-            setTrailerCallDone(true);
-        }
-    }
-
-    const getSimiliarMovies = async () => {
-
-    }
+    }, [isLoading])
 
     const createContent = () => {
 
@@ -73,36 +65,90 @@ const MovieDetails = () => {
         const overview = details.overview;
         const genres = [];
         details.genres.forEach(genre => {
-            genres.push(genre.name);
+            genres.push(genre.name + ' ');
         });
         const language = details.original_language;
         const poster = createImageUrl('w780', details.poster_path);
 
-        const companyLogos = [];
+        const companyLogoElements = [];
         details.production_companies.forEach(company => {
-            companyLogos.push(createImageUrl('w154', company.logo_path));
+            const logoUrl = createImageUrl('w154', company.logo_path);
+
+            const logoElement = (
+                <img className="logo" src={logoUrl} alt=""/>
+            )
+
+            companyLogoElements.push(logoElement);
         });
 
 
+
+        const releaseDate = details.release_date;
+        const runtime = details.runtime;
+        const voteAverage = details.vote_average;
+        const voteCount = details.vote_count;
+        
+        const trailerElements = createTrailers();
+
         return (
-            <div>
-                Details go here
+            <div className="wrapper">
+                <header> </header>
+                <div>
+                    <div className="container">
+                        <header className="titleContainer">
+                            <h1>{title}</h1>
+                            <h4>Genres: {genres}</h4>
+                        </header>
+                        <div className="detailsContainer">
+                            
+                        
+                            <div className="imageContainer">
+                                <img className="poster" src={poster} alt={title + 'Poster'}/>
+                                <div className="logoContainer">
+                                    {companyLogoElements}
+                                </div>
+                            </div>
+
+                            <div className="summaryContainer">
+                                <h3>Summary:</h3>
+                                <p>
+                                {overview}
+                            </p>
+                    
+                            {trailerElements}
+                            </div>
+
+                        </div>
+
+                        <br />
+                    </div>
+
+                </div>
+
+
+                <footer> </footer>
             </div>
         )
     }
 
-    const createImageUrl = (key, size) => {
+    const createImageUrl = (size, key) => {
         const url = `http://image.tmdb.org/t/p/${size}${key}`
         return url;
     }
 
+    const createRecMovies = () => {
 
+        const recElements = [];
+
+
+
+    }
 
     const createTrailers = () => {
         const trailerLinks = [];
 
 
-        trailers.results.forEach(video => {
+        trailers.forEach(video => {
             if (video.site === "YouTube" && video.type === "Trailer") {
                 const key = video.key
           
