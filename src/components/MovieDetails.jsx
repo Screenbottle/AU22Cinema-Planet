@@ -12,11 +12,13 @@ const MovieDetails = () => {
     const params = useParams();
     
     const [content, setContent] = useState(null);
+    const [movieId, setMovieId] = useState(null);
 
     const [details, setDetails] = useState(null);
     const [trailers, setTrailers] = useState(null);
     const [recMovies, setRecMovies] = useState(null);
-    const [movieId, setMovieId] = useState(null);
+    const [recMoviePages, setRecMoviePages] = useState(null);
+    const [recPage, setRecPage] = useState(0);
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -24,12 +26,14 @@ const MovieDetails = () => {
         
         if ('movie_id' in params) {
             fetchData(params.movie_id);
+            setMovieId(params.movie_id)
         }
 
         
     }, [])
 
     const fetchData = async (movie_id) => {
+        // handles the 3 api calls, makes sure that they are all completed before 
         const detailsUrl = `${baseUrl}${movie_id}?api_key=${apiKey}&language=en-US`;
         const trailerUrl = `${baseUrl}${movie_id}/videos?api_key=${apiKey}&language=en-US`;
         const recommendationsUrl = `${baseUrl}${movie_id}/recommendations?api_key=${apiKey}&language=en-US`;
@@ -44,6 +48,7 @@ const MovieDetails = () => {
             setDetails(detailsResult);
             setTrailers(trailerResult.results);
             setRecMovies(recResponse.results);
+            createRecMoviePages();
             setIsLoading(false);
             
         } catch (error) {
@@ -53,11 +58,24 @@ const MovieDetails = () => {
         }
     }
 
+    const createRecMoviePages = () => {
+        const tempRecMoviePages = [];
+        const size = 5;
+
+        for (let i = 0; i < recMovies.length; i += size) {
+            const chunk = recMovies.slice(i, i + size);
+            tempRecMoviePages.push(chunk);
+        }
+
+        setRecMoviePages(tempRecMoviePages);
+
+    }
+
     useEffect(() => {
         if (!isLoading) {
             setContent(createContent());
         }
-    }, [isLoading])
+    }, [isLoading]);
 
     const createContent = () => {
 
@@ -89,6 +107,7 @@ const MovieDetails = () => {
         const voteCount = details.vote_count;
         
         const trailerElements = createTrailers();
+        const recElement = createRecElement();
 
         return (
             <div className="wrapper">
@@ -97,7 +116,12 @@ const MovieDetails = () => {
                     <div className="container">
                         <header className="titleContainer">
                             <h1>{title}</h1>
-                            <h4>Genres: {genres}</h4>
+                            <div className="movieInfo">
+                                <h4>Release Date: {releaseDate}</h4>
+                                <h4>Runtime: {runtime}</h4>
+                                <h4>Genres: {genres}</h4>
+                            </div>
+                            
                         </header>
                         <div className="detailsContainer">
                             
@@ -112,15 +136,20 @@ const MovieDetails = () => {
                             <div className="summaryContainer">
                                 <h3>Summary:</h3>
                                 <p>
-                                {overview}
-                            </p>
-                    
-                            {trailerElements}
+                                    {overview}
+                                </p>
+                                <div className="trailerContainer">
+                                    {trailerElements}
+                                </div>
+
                             </div>
 
                         </div>
 
                         <br />
+                        <div className="recMoviesContainer">
+                            {recElement}
+                        </div>
                     </div>
 
                 </div>
@@ -136,12 +165,75 @@ const MovieDetails = () => {
         return url;
     }
 
-    const createRecMovies = () => {
+    const createRecElement = () => {
 
-        const recElements = [];
+        const recPageElements = [];
 
+        
+        recMoviePages.forEach(page => {
+            const movieElements = [];
 
+            page.forEach(movie => {
+                const posterKey = movie.poster_path;
+                const poster = createImageUrl('w92', posterKey);
+                const title = movie.title;
+                const voteAverage = movie.vote_average;
 
+                const element = (
+                    <div className="recMovieContainer">
+                        <div className="recPosterContainer">
+                            <img className="recPoster" src={poster} alt={title + ' poster'}/>
+                        </div>
+                        <div className="recTextContainer">
+                            <h5>{title}</h5>
+                            <h6>{voteAverage}</h6>
+                        </div>
+                    </div>
+                )
+
+                if (posterKey != null) {
+                    movieElements.push(element);
+                }
+            });
+
+            const pageElement = (
+                <div className="recPage">
+                    {movieElements}
+                </div>
+            );
+
+            recPageElements.push(pageElement);
+
+            
+        });
+
+        const recMoviesElement = (
+            <div className="recMoviesElement">
+                <button onClick={prevPage}>Left</button>
+                <div className="recPages">
+                    {recPageElements}
+                </div>
+                <button onClick={nextPage}>Right</button>
+            </div>
+        );
+
+        const nextPage = () => {
+            if (recPage < recMoviePages.length) {
+                setRecPage(recPage + 1);
+            }
+            else {
+                setRecPage(0);
+            }
+
+        }
+
+        const prevPage = () => {
+            if (recPage > 0) {
+                setRecPage(recPage - 1);
+            }
+        }
+
+        return recMoviesElement;
     }
 
     const createTrailers = () => {
