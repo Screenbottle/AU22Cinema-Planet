@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./movieList.css";
 import { useParams } from "react-router-dom";
 
 const MovieList = () => {
@@ -59,6 +58,7 @@ const MovieList = () => {
   };
 
   return (
+    
     <div className="movie-list">
         <h2>{(type ? type : "POPULAR").toUpperCase()}</h2>
       <ul className="movies-grid">

@@ -31,6 +31,9 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
           <Route path="movies/:type" element={<MovieList />}></Route>
+          <Route path='/movie/:movie_id' element= {
+            <div></div>
+          } ></Route>
         </Routes>
         </HashRouter>
     </div>

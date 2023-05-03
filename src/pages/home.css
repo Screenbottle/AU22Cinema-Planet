@@ -1,3 +1,7 @@
+a {
+  text-decoration: none;
+  color: inherit;
+}
 .movies-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -12,7 +16,7 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   transition: all 0.2s ease-in-out;
 }
 
@@ -40,7 +44,7 @@
 
 .movies-grid li img {
   width: 100%;
-  height: 400px;
+  height: 350px;
   object-fit: cover;
   transition: all 0.2s ease-in-out;
 }
@@ -102,8 +106,61 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 0px;
   margin-bottom: 10px;
   margin-left: 20px; 
   padding-left: 0px; 
 }
+
+.poster img {
+  width: 100%;
+  height: 600px;
+}
+
+@media (max-width: 768px) { 
+  .poster {
+    position: relative;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 0.5rem;
+  }
+
+  .poster img {
+    margin: auto;
+    display: block;
+    width: 100%;
+  }
+}
+.poster {
+  position: relative;
+}
+.poster .poster-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30%;
+  height: 150%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+.poster:hover .poster-overlay {
+  opacity: 1;
+}
+.movie-info-items {
+  margin: 0.5rem 0;
+  font-size: x-large;
+}
+
+.movie-info-items span {
+  font-weight: bold;
+  font-size: large;
+}
+
+
+  

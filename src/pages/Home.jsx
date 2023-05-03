@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./home.css";
 import { Link } from "react-router-dom";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // import CSS for carousel
 
 const Home = () => {
   const [popularMovies, setPopularMovies] = useState([]);
@@ -9,17 +11,17 @@ const Home = () => {
 
   useEffect(() => {
     const API_KEY = "34a3a84e40cb412a83d35dc3d683b406";
-    let url = `https://api.themoviedb.org/3/movie/popular?api_key=34a3a84e40cb412a83d35dc3d683b406&language=en-US`;
+    let url = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US`;
 
     if (selectedCategory !== "") {
-      url = `https://api.themoviedb.org/3/discover/movie?api_key=34a3a84e40cb412a83d35dc3d683b406&language=en-US&with_genres=${selectedCategory}`;
+      url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&with_genres=${selectedCategory}`;
     }
 
     fetch(url)
       .then((res) => res.json())
       .then((data) => setPopularMovies(data.results));
-    
-    fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=34a3a84e40cb412a83d35dc3d683b406&language=en-US`)
+
+    fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`)
       .then((res) => res.json())
       .then((data) => {
         const genresObj = {};
@@ -55,18 +57,47 @@ const Home = () => {
         <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
           <option value="">All Categories</option>
           {Object.keys(genres).map((id) => (
-            <option key={id} value={id}>{genres[id]}</option>
+            <option key={id} value={id}>
+              {genres[id]}
+            </option>
           ))}
         </select>
       </div>
+
+      <div className="poster">
+  <Carousel
+    showThumbs={false}
+    autoPlay={true}
+    interval={5000} 
+    infiniteLoop={true}
+    showStatus={false}
+  >
+    {popularMovies.map((movie) => (
+      <div key={movie.id}>
+        <div className="poster-overlay">
+          <h2>{movie.title}</h2>
+          <p className="movie-info-items">Release Date: <span>{movie.release_date}</span></p>
+          <p className="movie-info-items">Rating: <span><Rating rating={movie.vote_average} /></span></p>
+          <p className="movie-info-items">Genres: <span>{movie.genre_ids.map((id) => genres[id]).join(", ")}</span></p>
+        </div>
+        <img
+          src={`https://image.tmdb.org/t/p/original${movie && movie.backdrop_path}`}
+          alt={movie.title}
+        />
+      </div>
+    ))}
+  </Carousel>
+</div>
+
+
       <ul className="movies-grid">
         {popularMovies.map((movie) => (
           <li key={movie.id}>
             <Link to={`/movie/${movie.id}`}>
-              <img src={imageBaseUrl + movie.backdrop_path} alt={movie.title} />
+            <img src={`https://image.tmdb.org/t/p/original${movie && movie.backdrop_path}`} />
               <div className="movie-info">
                 <h2>{movie.title}</h2>
-                <p className="movie-info-">Release Date: <span>{movie.release_date}</span></p>
+                <p className="movie-info-item">Release Date: <span>{movie.release_date}</span></p>
                 <p className="movie-info-item">Rating: <span><Rating rating={movie.vote_average} /></span></p>
                 <p className="movie-info-item">Genres: <span>{movie.genre_ids.map((id) => genres[id]).join(", ")}</span></p>
               </div>
