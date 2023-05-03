@@ -1,11 +1,17 @@
 import { useEffect, useState } from 'react'
+
 import { HashRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Header from './components/Header'
 import MovieList from './components/MovieList'
 
-
+import './App.css'
 import { initializeApp } from 'firebase/app'
+
+import MovieDetails from './components/MovieDetails';
+import MovieNotFound from './components/MovieNotFound';
+
+
 
 function App() {
   // Your web app's Firebase configuration
@@ -17,6 +23,7 @@ function App() {
     messagingSenderId: 'your-messaging-sender-id',
     appId: 'your-app-id'
   };
+
 
   const [app, setApp] = useState(null);
 
@@ -32,10 +39,12 @@ function App() {
           <Route exact path="/" element={<Home />}></Route>
           <Route path="movies/:type" element={<MovieList />}></Route>
           <Route path='/movie/:movie_id' element= {
-            <div></div>
+            <MovieDetails />
           } ></Route>
         </Routes>
         </HashRouter>
+
+
     </div>
   );
 }
