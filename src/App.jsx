@@ -1,44 +1,52 @@
 import { useEffect, useState } from 'react'
+
+import { HashRouter, Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
+import Header from './components/Header'
+import MovieList from './components/MovieList'
+
 import './App.css'
 import { initializeApp } from 'firebase/app'
 
 import MovieDetails from './components/MovieDetails';
 import MovieNotFound from './components/MovieNotFound';
-import { Route, Router, Routes } from 'react-router-dom';
+
+
 
 function App() {
   // Your web app's Firebase configuration
   const firebaseConfig = {
-    apiKey: "AIzaSyA63z_hiERVvdwqjaFzotvDSv4i2khRX4c",
-    authDomain: "au22cinema-planet.firebaseapp.com",
-    projectId: "au22cinema-planet",
-    storageBucket: "au22cinema-planet.appspot.com",
-    messagingSenderId: "271914838545",
-    appId: "1:271914838545:web:4851c4d8fc1a38eaa5dfb0"
+    apiKey: '',
+    authDomain: 'your-auth-domain',
+    projectId: 'your-project-id',
+    storageBucket: 'your-storage-bucket',
+    messagingSenderId: 'your-messaging-sender-id',
+    appId: 'your-app-id'
   };
 
-  //const [app, setApp] = useState(null)
 
-  //useEffect(() => {
-    //setApp(initializeApp(firebaseConfig));
-  //}, [])
+  const [app, setApp] = useState(null);
+
+  useEffect(() => {
+    setApp(initializeApp(firebaseConfig));
+  }, []);
 
   return (
     <div className="App">
-      <Routes>
-        <Route path='/' element={
-          <MovieNotFound />
-        }/>
+      <HashRouter>
+        <Header />
+        <Routes>
+          <Route exact path="/" element={<Home />}></Route>
+          <Route path="movies/:type" element={<MovieList />}></Route>
+          <Route path='/movie/:movie_id' element= {
+            <MovieDetails />
+          } ></Route>
+        </Routes>
+        </HashRouter>
 
-        <Route path='/movie/:movie_id' element={
-          <MovieDetails />
-        }/>
 
-
-      </Routes>
-      
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
