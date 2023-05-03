@@ -6,7 +6,10 @@ import Header from './components/Header'
 import MovieList from './components/MovieList'
 
 import './App.css'
-import { initializeApp } from 'firebase/app'
+
+import { initializeApp } from "firebase/app";
+import MovieSearch from './MovieSearch';
+
 
 import MovieDetails from './components/MovieDetails';
 import MovieNotFound from './components/MovieNotFound';
@@ -33,6 +36,7 @@ function App() {
 
   return (
     <div className="App">
+
       <HashRouter>
         <Header />
         <Routes>
@@ -43,7 +47,6 @@ function App() {
           } ></Route>
         </Routes>
         </HashRouter>
-
 
     </div>
   );
