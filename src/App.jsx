@@ -37,7 +37,7 @@ function App() {
   return (
     <div className="App">
 
-      <HashRouter>
+      
         <Header />
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
@@ -46,7 +46,7 @@ function App() {
             <MovieDetails />
           } ></Route>
         </Routes>
-        </HashRouter>
+        
 
     </div>
   );
