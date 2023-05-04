@@ -18,6 +18,7 @@ a {
   overflow: hidden;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   transition: all 0.2s ease-in-out;
+  height: 350px;
 }
 
 .movies-grid li:hover {
@@ -51,7 +52,7 @@ a {
 
 .movie-info {
   position: absolute;
-  bottom: -150px;
+  bottom: -220px;
   left: 0;
   right: 0;
   padding: 16px;
@@ -141,8 +142,6 @@ a {
   height: 150%;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
-
-  
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -162,5 +161,68 @@ a {
   font-size: large;
 }
 
+.search-bar {
+  margin-bottom: 20px;
+  margin-left: 450px;
+  margin-bottom: 0px;
 
+}
+
+.search-bar input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4CAF50;
+  border-radius: 10px;
+  color: white;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  margin: 0px;
+  cursor: pointer;
   
+}
+
+button.active {
+  background-color: #555;
+}
+
+button:hover {
+  background-color: #3e8e41;
+}
+
+.categories {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.categories span {
+  font-size: 16px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin: 20px 0px 20px;
+}
+
+.categories span:hover {
+  color: #666;
+}
+
+.categories span.active {
+  font-weight: bold;
+  color: #ac1616;
+}
+a.buy-now img {
+  width: 30px;
+  height: 30px; 
+}
