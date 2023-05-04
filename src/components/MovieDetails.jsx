@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import MovieNotFound from "./MovieNotFound";
 import './MovieDetails.css'
 import ErrorPage from "./ErrorPage";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // import CSS for carousel
 
 
 const MovieDetails = () => {
-    const apiKey = 'key_here';
+    const apiKey = 'a1d7615b946e5e8a79a71f257fa86e96';
     const baseUrl = 'https://api.themoviedb.org/3/movie/';
 
     const params = useParams();
@@ -17,20 +19,18 @@ const MovieDetails = () => {
     const [details, setDetails] = useState(null);
     const [trailers, setTrailers] = useState(null);
     const [recMovies, setRecMovies] = useState(null);
-    const [recPage, setRecPage] = useState(0);
-    const [recPageCount, setRecPageCount] = useState(0);
 
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        
+        loadPage();
+    }, []);
+
+    const loadPage = () => {
         if ('movie_id' in params) {
             fetchData(params.movie_id);
-            setMovieId(params.movie_id)
         }
-
-        
-    }, [])
+    }
 
     const fetchData = async (movie_id) => {
         // handles the 3 api calls, makes sure that they are all completed before 
@@ -38,7 +38,8 @@ const MovieDetails = () => {
         const trailerUrl = `${baseUrl}${movie_id}/videos?api_key=${apiKey}&language=en-US`;
         const recommendationsUrl = `${baseUrl}${movie_id}/recommendations?api_key=${apiKey}&language=en-US`;
 
-        try {  
+        try {
+            setIsLoading(true);  
             const [detailsResult, trailerResult, recResponse] = await Promise.all([
                 fetch(detailsUrl).then(res => res.json()),
                 fetch(trailerUrl).then(res => res.json()),
@@ -69,7 +70,7 @@ const MovieDetails = () => {
         const overview = details.overview;
         const genres = [];
         details.genres.forEach(genre => {
-            genres.push(genre.name + ' ');
+            genres.push(genre.name + ', ');
         });
         const language = details.original_language;
         const poster = createImageUrl('w780', details.poster_path);
@@ -103,13 +104,16 @@ const MovieDetails = () => {
                     <div className="container">
                         <header className="titleContainer">
                             <h1>{title}</h1>
+                            <br/>
                             <div className="movieInfo">
                                 <h4>Release Date: {releaseDate}</h4>
-                                <h4>Runtime: {runtime}</h4>
+                                <h4>Runtime: {runtime} min</h4>
                                 <h4>Genres: {genres}</h4>
                             </div>
+
                             
                         </header>
+                        <br/>
                         <div className="detailsContainer">
                             
                         
@@ -125,6 +129,7 @@ const MovieDetails = () => {
                                 <p>
                                     {overview}
                                 </p>
+                                <br/>
                                 <div className="trailerContainer">
                                     {trailerElements}
                                 </div>
@@ -157,34 +162,34 @@ const MovieDetails = () => {
         const recPageElements = [];
 
         const recMoviePages = [];
-        const size = 5;
+        const size = 1;
 
         for (let i = 0; i < recMovies.length; i += size) {
             const chunk = recMovies.slice(i, i + size);
             recMoviePages.push(chunk);
         }
-
-        setRecPageCount(recMoviePages.length);
-
         
         recMoviePages.forEach(page => {
             const movieElements = [];
 
             page.forEach(movie => {
                 const posterKey = movie.poster_path;
-                const poster = createImageUrl('w92', posterKey);
+                const poster = createImageUrl('w342', posterKey);
                 const title = movie.title;
                 const voteAverage = movie.vote_average;
+                
 
                 const element = (
                     <div className="recMovieContainer">
-                        <div className="recPosterContainer">
-                            <img className="recPoster" src={poster} alt={title + ' poster'}/>
-                        </div>
-                        <div className="recTextContainer">
-                            <h5>{title}</h5>
-                            <h6>{voteAverage}</h6>
-                        </div>
+                        <Link to={`/movie/${movie.id}`} onClick={() => fetchData(movie.id)}>
+                            <div className="recPosterContainer">
+                                <img className="recPoster" src={poster} alt={title + ' poster'}/>
+                            </div>
+                            <div className="recTextContainer">
+                                <h5>{title}</h5>
+                                <h6>{voteAverage}</h6>
+                            </div>
+                        </Link>
                     </div>
                 )
 
@@ -202,15 +207,15 @@ const MovieDetails = () => {
             recPageElements.push(pageElement);
 
             
+
+            
         });
 
         const recMoviesElement = (
             <div className="recMoviesElement">
-                <button onClick={prevPage}>Left</button>
-                <div className="recPages">
-                    {recPageElements[recPage]}
-                </div>
-                <button onClick={nextPage}>Right</button>
+                <Carousel infiniteLoop={true} showThumbs={false} autoPlay={true} centerMode={true} showStatus={false}>
+                    {recPageElements}
+                </Carousel>
             </div>
         );
 
@@ -218,24 +223,6 @@ const MovieDetails = () => {
 
         return recMoviesElement;
     }
-
-
-    const nextPage = () => {
-        if (recPage < recPageCount.length) {
-            setRecPage(recPage + 1);
-        }
-        else {
-            setRecPage(0);
-        }
-
-    }
-
-    const prevPage = () => {
-        if (recPage > 0) {
-            setRecPage(recPage - 1);
-        }
-    }
-
 
     const createTrailers = () => {
         const trailerLinks = [];

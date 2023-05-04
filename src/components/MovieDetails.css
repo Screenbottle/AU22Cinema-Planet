@@ -4,8 +4,8 @@
     justify-content: center;
     background-color: darkred;
     width: 100%;
-    padding-left: 8%;
-    padding-right: 8%;
+    padding-left: 2%;
+    padding-right: 2%;
 }
 
 .container {
@@ -52,14 +52,15 @@
     align-items: center;
     justify-content: center;
     max-width: 100%;
-    background-color: white;
+    background-color: darkgrey;
 }
 
 .logoContainer img {
     flex-basis: calc(4.33% - 10px);
+    margin: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
-    max-width: 15%;
+    max-width: 50%;
     
 }
 
@@ -81,4 +82,29 @@
 
 .movieInfo h4 {
     color: darkgrey;
+}
+
+.recMoviesElement {
+    width: 50%;
+    align-self: center;
+    justify-content: center;
+    
+}
+
+.recPageElement {
+    display: grid;
+}
+
+.recMovieContainer {
+    max-height: 10%;
+    margin: 1%;
+    padding: 1%;
+}
+
+.recPosterContainer {
+
+}
+
+.recPoster {
+    max-width: 30%;
 }
