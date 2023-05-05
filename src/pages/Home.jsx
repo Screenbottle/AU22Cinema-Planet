@@ -101,7 +101,7 @@ const Home = () => {
 <ul className="movies-grid">
       {popularMovies.map((movie) => (
         <li key={movie.id}>
-          
+           <Link to={`/movie/${movie.id}`}>
           <img src={imageBaseUrl + movie.backdrop_path} alt={movie.title} />
             <div className="movie-info">
               <h2>{movie.title}</h2>
@@ -113,8 +113,8 @@ const Home = () => {
               <span><h2><img src="https://pngimg.com/uploads/plus/plus_PNG26.png"/> Buy Now</h2></span>
               </a>
               </Link>
-          </div>
-          
+           </div>
+          </Link>
         </li>
       ))}
     </ul>
