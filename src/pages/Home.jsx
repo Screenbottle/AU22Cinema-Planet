@@ -104,10 +104,12 @@ const Home = () => {
           
           <img src={imageBaseUrl + movie.backdrop_path} alt={movie.title} />
             <div className="movie-info">
+              <Link to={`/movie/${movie.id}`}>
               <h2>{movie.title}</h2>
               <p className="movie-info-item">Release Date: <span>{movie.release_date}</span></p>
               <p className="movie-info-item">Rating: <span><Rating rating={movie.vote_average} /></span></p>
               <p className="movie-info-item">Genres: <span>{movie.genre_ids.map((id) => genres[id]).join(", ")}</span></p>
+              </Link>
               <Link to={``}>
               <a class="buy-now">
               <span><h2><img src="https://pngimg.com/uploads/plus/plus_PNG26.png"/> Buy Now</h2></span>
