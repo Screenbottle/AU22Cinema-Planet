@@ -9,6 +9,7 @@ import MovieList from './components/MovieList'
 import MovieSearch from './MovieSearch';
 import MovieDetails from './components/MovieDetails';
 import MovieNotFound from './components/MovieNotFound';
+import Signup from './components/Signup';
 
 import './App.css'
 
@@ -46,6 +47,9 @@ function App() {
           <Route path='/movie/:movie_id' element= {
             <MovieDetails />
           } ></Route>
+          <Route path='/signup' element={
+            <Signup />
+          }></Route>
         </Routes>
     </div>
   );

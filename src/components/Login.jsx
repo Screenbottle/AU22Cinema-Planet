@@ -1,32 +1,83 @@
-import React, { useState } from 'react';
-import firebase from 'firebase/app';
-import 'firebase/auth';
+import React, {useState} from 'react';
+import {  signInWithEmailAndPassword   } from 'firebase/auth';
+import { auth } from '../firebase';
+import { NavLink, useNavigate } from 'react-router-dom'
 
 const Login = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const handleLogin = () => {
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(userCredential => {
-            // Do something with the user object
+       
+    const onLogin = (e) => {
+        e.preventDefault();
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            navigate("/")
+            console.log(user);
         })
-        .catch(error => {
-            // Handle the error
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
         });
-    };
-
-    const handleSignUp = () => {
-        
+       
     }
 
     return (
         <div>
-        <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-        <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
-        <br/>
-        <button onClick={handleLogin}>Login</button>
-        <button onClick={handleSignUp}>Sign Up</button>
+            <section>
+                <div>                                            
+                    <p> FocusApp </p>                       
+                                                       
+                    <form>                                              
+                        <div>
+                            <label htmlFor="email-address">
+                                Email address
+                            </label>
+                            <input
+                                id="email-address"
+                                name="email"
+                                type="email"                                    
+                                required                                                                                
+                                placeholder="Email address"
+                                onChange={(e)=>setEmail(e.target.value)}
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="password">
+                                Password
+                            </label>
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"                                    
+                                required                                                                                
+                                placeholder="Password"
+                                onChange={(e)=>setPassword(e.target.value)}
+                            />
+                        </div>
+                                                
+                        <div>
+                            <button                                    
+                                onClick={onLogin}                                        
+                            >      
+                                Login                                                                  
+                            </button>
+                        </div>                               
+                    </form>
+                       
+                    <p className="text-sm text-white text-center">
+                        No account yet? {' '}
+                        <NavLink to="/signup">
+                            Sign up
+                        </NavLink>
+                    </p>
+                                                   
+                </div>
+            </section>
         </div>
     );
 }
