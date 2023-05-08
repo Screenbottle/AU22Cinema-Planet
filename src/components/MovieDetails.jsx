@@ -22,6 +22,55 @@ const MovieDetails = () => {
 
     const [isLoading, setIsLoading] = useState(true);
 
+    const [comment, setComment] = useState("");
+  const [rating, setRating] = useState(0);
+  const [comments, setComments] = useState([]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Here you can save the comment and rating data to your backend or local storage
+    const newComment = {
+      comment: comment,
+      rating: rating,
+    };
+    setComments([...comments, newComment]);
+    setComment("");
+    setRating(0);
+  };
+
+  const handleRatingChange = (newRating) => {
+    setRating(newRating);
+  };
+
+  const handleCommentChange = (event) => {
+    setComment(event.target.value);
+  };
+
+  const renderStars = () => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      const starClass =
+        i <= rating ? "fa fa-star checked" : "fa fa-star unchecked";
+      stars.push(
+        <span
+          key={i}
+          className={starClass}
+          onClick={() => handleRatingChange(i)}
+        />
+      );
+    }
+    return stars;
+  };
+
+  const renderComments = () => {
+    return comments.map((c, index) => (
+      <div key={index} className="comment">
+        <p>Rating: {c.rating} stars</p>
+        <p>Comment: {c.comment}</p>
+      </div>
+    ));
+  };
+
     useEffect(() => {
         loadPage();
     }, []);
@@ -133,7 +182,22 @@ const MovieDetails = () => {
                                 <div className="trailerContainer">
                                     {trailerElements}
                                 </div>
-
+                                <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Comment:
+          <textarea value={comment} onChange={handleCommentChange} />
+        </label>
+        <label>
+          Rating:
+          <div className="ratings">{renderStars()}</div>
+        </label>
+        <button type="submit" className="comment-button">
+          Submit
+        </button>
+      </form>
+      <div className="comments">{renderComments()}</div>
+    </div>
                             </div>
 
                         </div>

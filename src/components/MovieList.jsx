@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const MovieList = () => {
   const [movieList, setMovieList] = useState([]);
@@ -52,7 +53,7 @@ const MovieList = () => {
         {[...Array(emptyStars)].map((_, index) => (
           <span key={index} className="star">&#9734;</span>
         ))}
-        <span className="rating-value">{rating}</span>
+        <span className="rating-value">{rating/2}</span>
       </div>
     );
   };
@@ -60,19 +61,25 @@ const MovieList = () => {
   return (
     
     <div className="movie-list">
-        <h2>{(type ? type : "POPULAR").toUpperCase()}</h2>
+      <h2>{(type ? type : "POPULAR").toUpperCase()}</h2>
       <ul className="movies-grid">
         {movieList.map((movie) => (
           <li key={movie.id} >
-            <img
-              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-              alt={movie.title} />
-            <div className="movie-info">
-              <h2 className="movie-info-item"><span>{movie.title}</span></h2>
-              <p className="movie-info-item">Release Date: {movie.release_date}</p>
-              <p className="movie-info-item">Rating: <Rating rating={movie.vote_average} /></p>
-              <p className="movie-info-item">Genres: {getGenresById(movie.genre_ids)}</p>
-            </div>
+            <Link to={`/movie/${movie.id}`}>
+          <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={movie.title} />
+          <div className="movie-info">
+          <h2 className="movie-info-item"><span>{movie.title}</span></h2>
+          <p className="movie-info-item">Release Date:<span>{movie.release_date}</span></p>
+          <p className="movie-info-item">Rating: <span> <Rating rating={movie.vote_average} /></span></p>
+          <p className="movie-info-item">Genres: <span>{getGenresById(movie.genre_ids)}</span></p>
+          <Link to={``}>
+              <a class="buy-now">
+              <span><h2><img src="https://pngimg.com/uploads/plus/plus_PNG26.png"/> Buy Now</h2></span>
+              </a>
+              </Link>
+              <h2>$12.99</h2> 
+          </div>
+          </Link>
           </li>
         ))}
       </ul>
