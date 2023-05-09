@@ -64,6 +64,10 @@ const MovieDetails = () => {
         }
     }, [isLoading]);
 
+    const addToCart = () => {
+
+    }
+
     const createContent = () => {
 
         const title = details.original_title;
@@ -267,10 +271,6 @@ const MovieDetails = () => {
         )
 
         setContent(errorPage);
-    }
-
-    const addToCart = () => {
-
     }
 
 

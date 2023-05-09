@@ -1,6 +1,7 @@
 import React from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
+import { auth } from "firebase/auth";
 
 const Header = () => {
   return (
