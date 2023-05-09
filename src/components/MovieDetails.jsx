@@ -33,7 +33,7 @@ const MovieDetails = () => {
     }
 
     const fetchData = async (movie_id) => {
-        // handles the 3 api calls, makes sure that they are all completed before 
+        // handles the 3 api calls, makes sure that they are all completed before doing anything else
         const detailsUrl = `${baseUrl}${movie_id}?api_key=${apiKey}&language=en-US`;
         const trailerUrl = `${baseUrl}${movie_id}/videos?api_key=${apiKey}&language=en-US`;
         const recommendationsUrl = `${baseUrl}${movie_id}/recommendations?api_key=${apiKey}&language=en-US`;

@@ -10,7 +10,7 @@ const Signup = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
-    const [errorElement, setErrorElement] =useState(null);
+    const [errorElement, setErrorElement] = useState(null);
 
     const onSubmit = async () => {
         
@@ -20,13 +20,13 @@ const Signup = () => {
                 // Signed in
                 const user = userCredential.user;
                 console.log(user);
-                navigate('/login')
+                navigate('/login');
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log(errorCode, errorMessage);
-                createErrorElement(errorCode, errorMessage)
+                createErrorElement(errorCode, errorMessage);
             });
 
         }
@@ -74,7 +74,11 @@ const Signup = () => {
                                 />
                             </div>
 
-                            {errorElement}                                             
+                            <br/>
+
+                            {errorElement}
+
+                            <br/>
                         
                             <button
                                 type="submit" 

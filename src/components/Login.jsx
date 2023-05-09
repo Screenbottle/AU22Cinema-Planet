@@ -7,6 +7,7 @@ const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorElement, setErrorElement] = useState(null);
        
     const onLogin = (e) => {
         e.preventDefault();
@@ -20,9 +21,18 @@ const Login = () => {
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
+            console.log(errorCode, errorMessage);
+            createErrorElement(errorCode, errorMessage);
         });
        
+    }
+
+    const createErrorElement = (errorCode, errorMessage) => {
+        setErrorElement(
+            <div>
+                <h5>Something went wrong: {errorCode} {errorMessage}</h5>
+            </div>
+        );
     }
 
     return (
@@ -59,6 +69,12 @@ const Login = () => {
                                 onChange={(e)=>setPassword(e.target.value)}
                             />
                         </div>
+
+                        <br/>
+
+                        {errorElement}
+
+                        <br/>
                                                 
                         <div>
                             <button                                    
