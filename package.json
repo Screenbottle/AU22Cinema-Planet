@@ -1,7 +1,7 @@
 {
   "name": "au22cinema-planet",
   "private": true,
-  "homepage": "https://gitname.github.io/AU22Cinema-Planet",
+  "homepage": "https://Screenbottle.github.io/AU22Cinema-Planet",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.4.0",
     "@reduxjs/toolkit": "^1.9.5",
     "firebase": "^9.19.1",
     "gh-pages": "^5.0.0",
@@ -24,7 +25,7 @@
     "react-loading-skeleton": "^3.2.1",
     "react-redux": "^8.0.5",
     "react-responsive-carousel": "^3.2.23",
-    "react-router-dom": "^6.10.0",
+    "react-router-dom": "^6.11.1",
     "redux": "^4.2.1",
     "sort-by": "^1.2.0"
   },

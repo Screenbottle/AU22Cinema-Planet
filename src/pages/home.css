@@ -52,7 +52,7 @@ a {
 
 .movie-info {
   position: absolute;
-  bottom: -220px;
+  bottom: -250px;
   left: 0;
   right: 0;
   padding: 16px;
@@ -103,16 +103,6 @@ a {
 .movies-grid li:hover .description {
   display: block;
 }
-.category-filter {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 0px;
-  margin-bottom: 10px;
-  margin-left: 20px; 
-  padding-left: 0px; 
-}
-
 .poster img {
   width: 100%;
   height: 600px;
@@ -160,14 +150,6 @@ a {
   font-weight: bold;
   font-size: large;
 }
-
-.search-bar {
-  margin-bottom: 20px;
-  margin-left: 450px;
-  margin-bottom: 0px;
-
-}
-
 .search-bar input {
   padding: 10px;
   border: 1px solid #ccc;
@@ -175,7 +157,7 @@ a {
   font-size: 16px;
   width: 50%;
   box-sizing: border-box;
-}
+} */
 
 button {
   background-color: #4CAF50;
@@ -198,31 +180,88 @@ button.active {
 button:hover {
   background-color: #3e8e41;
 }
+a.buy-now img {
+  width: 30px;
+  height: 30px; 
+}
+a.cinema img{
+  width: 30px;
+  height: 30px; 
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.search-bar input[type="text"] {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-color: #ccc;
+  border-radius: 5px;
+ 
+}
 
 .categories {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  gap: 16px;
+  margin-top: 1rem;
 }
 
 .categories span {
   font-size: 16px;
-  color: #ffffff;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  margin: 20px 0px 20px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  cursor: pointer;
+  color: white;
 }
-
-.categories span:hover {
+ .categories span:hover {
   color: #666;
 }
-
 .categories span.active {
   font-weight: bold;
-  color: #ac1616;
+  color: red;
 }
-a.buy-now img {
-  width: 30px;
-  height: 30px; 
+
+@media (max-width: 768px) {
+  .search-bar {
+    margin-left: 100px;
+    margin-right: 100px;
+    border-radius: 5px;  
+  }
+
+  .categories {
+    margin-top: 0.5rem;
+  }
+
+  .categories span {
+    padding: 0.3rem 0.5rem;
+    margin: 0.3rem;
+    font-size: 0.7rem;
+  }
+}
+
+.media-type {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+ 
+}
+
+.media-type span {
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  cursor: pointer;
+  color: white;
+}
+.media-type span:hover {
+  color: #666;
 }
