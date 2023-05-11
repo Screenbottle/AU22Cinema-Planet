@@ -1,15 +1,14 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, {useState} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import {  createUserWithEmailAndPassword  } from 'firebase/auth';
 import { auth } from '../firebase';
 
 
 const Signup = () => {
 
     const navigate = useNavigate();
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [errorElement, setErrorElement] = useState(null);
 
     const onSubmit = async () => {

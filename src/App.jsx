@@ -8,7 +8,8 @@ import MovieSearch from './MovieSearch';
 import MovieDetails from './components/MovieDetails';
 import MovieNotFound from './components/MovieNotFound';
 import Signup from './components/Signup';
-import { auth } from '../firebase';
+import { auth } from './firebase';
+
 import './App.css'
 import Login from './components/Login'
 

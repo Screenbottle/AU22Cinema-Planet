@@ -5,11 +5,14 @@ import './MovieDetails.css'
 import ErrorPage from "./ErrorPage";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // import CSS for carousel
+import { useSelector } from "react-redux";
+
 
 
 const MovieDetails = () => {
     const apiKey = 'a1d7615b946e5e8a79a71f257fa86e96';
     const baseUrl = 'https://api.themoviedb.org/3/movie/';
+    const currentUser = useSelector((state) => state.user.currentUser);
 
     const params = useParams();
     
@@ -24,6 +27,7 @@ const MovieDetails = () => {
 
     useEffect(() => {
         loadPage();
+        console.log(currentUser)
     }, []);
 
     const loadPage = () => {

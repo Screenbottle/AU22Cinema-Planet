@@ -2,12 +2,15 @@ import React, {useState} from 'react';
 import {  signInWithEmailAndPassword   } from 'firebase/auth';
 import { auth } from '../firebase';
 import { NavLink, useNavigate } from 'react-router-dom'
+import { useDispatch } from "react-redux";
+import { actions } from '../features/firebaseRedux';
 
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorElement, setErrorElement] = useState(null);
+    const dispatch = useDispatch();
        
     const onLogin = (e) => {
         e.preventDefault();
@@ -15,6 +18,7 @@ const Login = () => {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
+            dispatch(actions.setCurrentUser(user));
             navigate("/")
             console.log(user);
         })
