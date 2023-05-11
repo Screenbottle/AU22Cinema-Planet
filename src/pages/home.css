@@ -178,7 +178,7 @@ button.active {
 }
 
 button:hover {
-  background-color: #3e8e41;
+  background-color: grey;
 }
 a.buy-now img {
   width: 30px;
@@ -199,9 +199,27 @@ a.cinema img{
   flex: 1;
   padding: 0.5rem;
   font-size: 1rem;
-  border-color: #ccc;
+  border: 1px solid #ccc;
   border-radius: 5px;
- 
+  margin-right: 0.5rem;
+  margin-left: 2rem;
+}
+
+.search-type {
+  display: flex;
+}
+
+.search-type-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.search-type-button.active {
+  background-color: red;
+  color: #ffffff;
 }
 
 .categories {
