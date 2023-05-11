@@ -5,11 +5,14 @@ import './MovieDetails.css'
 import ErrorPage from "./ErrorPage";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // import CSS for carousel
+import { useSelector } from "react-redux";
+
 
 
 const MovieDetails = () => {
     const apiKey = 'a1d7615b946e5e8a79a71f257fa86e96';
     const baseUrl = 'https://api.themoviedb.org/3/movie/';
+    const currentUser = useSelector((state) => state.user.currentUser);
 
     const params = useParams();
     
@@ -73,6 +76,7 @@ const MovieDetails = () => {
 
     useEffect(() => {
         loadPage();
+        console.log(currentUser)
     }, []);
 
     const loadPage = () => {
@@ -82,7 +86,7 @@ const MovieDetails = () => {
     }
 
     const fetchData = async (movie_id) => {
-        // handles the 3 api calls, makes sure that they are all completed before 
+        // handles the 3 api calls, makes sure that they are all completed before doing anything else
         const detailsUrl = `${baseUrl}${movie_id}?api_key=${apiKey}&language=en-US`;
         const trailerUrl = `${baseUrl}${movie_id}/videos?api_key=${apiKey}&language=en-US`;
         const recommendationsUrl = `${baseUrl}${movie_id}/recommendations?api_key=${apiKey}&language=en-US`;
@@ -112,6 +116,10 @@ const MovieDetails = () => {
             setContent(createContent());
         }
     }, [isLoading]);
+
+    const addToCart = () => {
+
+    }
 
     const createContent = () => {
 
@@ -331,10 +339,6 @@ const MovieDetails = () => {
         )
 
         setContent(errorPage);
-    }
-
-    const addToCart = () => {
-
     }
 
 
