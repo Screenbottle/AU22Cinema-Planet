@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase";
+import { collection, addDoc, doc, getDoc, getDocs } from "firebase/firestore"; 
 import "./MovieDetails.css";
 
 const MovieDetails = () => {
@@ -24,13 +25,7 @@ const MovieDetails = () => {
       comment: comment,
       rating: rating,
     };
-    db.collection(movie_id).add(newComment)
-    .then((docRef) => {
-      console.log("Document written with ID: ", docRef.id);
-    })
-    .catch((error) => {
-      console.error("Error adding document: ", error);
-    });
+    addDoc(collection(db, movie_id), newComment);
   
     setComments([...comments, newComment]);
     setComment("");
@@ -100,10 +95,9 @@ const MovieDetails = () => {
 
     const querySnapshot = await getDocs(collection(db, movie_id));
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
-      commentList.push()
-    });
+      const comment = doc.data();
+      commentList.push(comment);
+    })
 
     setComments(commentList);
   }
