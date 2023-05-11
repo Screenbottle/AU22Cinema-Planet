@@ -1,8 +1,13 @@
 import React from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { CartIcon } from "../features/Icon";
 
 const Header = () => {
+
+  const amount = useSelector((store) => store.cart.amount)
+
   return (
     <div className="header">
       <div className="headerLeft">
@@ -22,8 +27,12 @@ const Header = () => {
         <Link to="/movies/upcoming">
           <span>Upcoming</span>
         </Link>
+        <Link to='/ShoppingCart'> 
+        {/* <CartIcon></CartIcon> */}
+          <span>Shopping cart {amount}</span>
+        </Link>
       </div>
-    </div>
+    </div>  
   );
 };
 

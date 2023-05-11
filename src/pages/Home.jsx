@@ -25,8 +25,10 @@ const Home = () => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => setPopularMovies(data.results));
-      
-    fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`)
+
+    fetch(
+      `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
+    )
       .then((res) => res.json())
       .then((data) => {
         const genresObj = {};
@@ -46,10 +48,14 @@ const Home = () => {
     return (
       <div className="rating">
         {[...Array(stars)].map((_, index) => (
-          <span key={index} className="star filled">&#9733;</span>
+          <span key={index} className="star filled">
+            &#9733;
+          </span>
         ))}
         {[...Array(emptyStars)].map((_, index) => (
-          <span key={index} className="star">&#9734;</span>
+          <span key={index} className="star">
+            &#9734;
+          </span>
         ))}
         <span className="rating-value">{rating}</span>
       </div>
@@ -59,65 +65,100 @@ const Home = () => {
   return (
     <div className="Home">
       <div className="search-bar">
-      <input type="text" placeholder="Search movies" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+        <input
+          type="text"
+          placeholder="Search movies"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
       </div>
-      <div className="categories"> {Object.keys(genres).map((id) => (
-      <span
-      key={id}
-      className={id === selectedCategory ? "active" : ""}
-      onClick={() => setSelectedCategory(id)}
-    >
-      {genres[id]}
-    </span>
-  ))}
-</div>
+      <div className="categories">
+        {" "}
+        {Object.keys(genres).map((id) => (
+          <span
+            key={id}
+            className={id === selectedCategory ? "active" : ""}
+            onClick={() => setSelectedCategory(id)}
+          >
+            {genres[id]}
+          </span>
+        ))}
+      </div>
 
       <div className="poster">
         <Carousel
           showThumbs={false}
           autoPlay={true}
-          interval={5000} 
+          interval={5000}
           infiniteLoop={true}
           showStatus={false}
         >
           {popularMovies.map((movie) => (
-      <div key={movie.id}>
-        <div className="poster-overlay">
-          <h2>{movie.title}</h2>
-          <p className="movie-info-items">Release Date: <span>{movie.release_date}</span></p>
-          <p className="movie-info-items">Rating: <span><Rating rating={movie.vote_average} /></span></p>
-          <p className="movie-info-items">Genres: <span>{movie.genre_ids.map((id) => genres[id]).join(", ")}</span></p>
-        </div>
-        <img
-          src={`https://image.tmdb.org/t/p/original${movie && movie.backdrop_path}`}
-          alt={movie.title}
-        />
+            <div key={movie.id}>
+              <div className="poster-overlay">
+                <h2>{movie.title}</h2>
+                <p className="movie-info-items">
+                  Release Date: <span>{movie.release_date}</span>
+                </p>
+                <p className="movie-info-items">
+                  Rating:{" "}
+                  <span>
+                    <Rating rating={movie.vote_average} />
+                  </span>
+                </p>
+                <p className="movie-info-items">
+                  Genres:{" "}
+                  <span>
+                    {movie.genre_ids.map((id) => genres[id]).join(", ")}
+                  </span>
+                </p>
+              </div>
+              <img
+                src={`https://image.tmdb.org/t/p/original${
+                  movie && movie.backdrop_path
+                }`}
+                alt={movie.title}
+              />
+            </div>
+          ))}
+        </Carousel>
       </div>
-    ))}
-  </Carousel>
-</div>
 
-
-<ul className="movies-grid">
-      {popularMovies.map((movie) => (
-        <li key={movie.id}>
-          
-          <img src={imageBaseUrl + movie.backdrop_path} alt={movie.title} />
+      <ul className="movies-grid">
+        {popularMovies.map((movie) => (
+          <li key={movie.id}>
+            <img src={imageBaseUrl + movie.backdrop_path} alt={movie.title} />
             <div className="movie-info">
               <h2>{movie.title}</h2>
-              <p className="movie-info-item">Release Date: <span>{movie.release_date}</span></p>
-              <p className="movie-info-item">Rating: <span><Rating rating={movie.vote_average} /></span></p>
-              <p className="movie-info-item">Genres: <span>{movie.genre_ids.map((id) => genres[id]).join(", ")}</span></p>
-              <Link to={``}>
-              <a class="buy-now">
-              <span><h2><img src="https://pngimg.com/uploads/plus/plus_PNG26.png"/> Buy Now</h2></span>
-              </a>
+              <p className="movie-info-item">
+                Release Date: <span>{movie.release_date}</span>
+              </p>
+              <p className="movie-info-item">
+                Rating:{" "}
+                <span>
+                  <Rating rating={movie.vote_average} />
+                </span>
+              </p>
+              <p className="movie-info-item">
+                Genres:{" "}
+                <span>
+                  {movie.genre_ids.map((id) => genres[id]).join(", ")}
+                </span>
+              </p>
+              <Link to={"/ShoppingCart"}>
+                <a class="buy-now">
+                  <span>
+                    <h2>
+                      <img src="https://pngimg.com/uploads/plus/plus_PNG26.png" />{" "}
+                      Buy Now
+                    </h2>
+                  </span>
+                </a>
               </Link>
-          </div>
-          
-        </li>
-      ))}
-    </ul>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
