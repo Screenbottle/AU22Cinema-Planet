@@ -157,7 +157,7 @@ a {
   font-size: 16px;
   width: 50%;
   box-sizing: border-box;
-}
+} */
 
 button {
   background-color: #4CAF50;
@@ -178,7 +178,7 @@ button.active {
 }
 
 button:hover {
-  background-color: grey;
+  background-color: #3e8e41;
 }
 a.buy-now img {
   width: 30px;
@@ -199,27 +199,9 @@ a.cinema img{
   flex: 1;
   padding: 0.5rem;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border-color: #ccc;
   border-radius: 5px;
-  margin-right: 0.5rem;
-  margin-left: 2rem;
-}
-
-.search-type {
-  display: flex;
-}
-
-.search-type-button {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.search-type-button.active {
-  background-color: red;
-  color: #ffffff;
+ 
 }
 
 .categories {
@@ -241,8 +223,6 @@ a.cinema img{
  .categories span:hover {
   color: #666;
 }
-
-
 .categories span.active {
   font-weight: bold;
   color: red;
@@ -264,4 +244,24 @@ a.cinema img{
     margin: 0.3rem;
     font-size: 0.7rem;
   }
+}
+
+.media-type {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+ 
+}
+
+.media-type span {
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  cursor: pointer;
+  color: white;
+}
+.media-type span:hover {
+  color: #666;
 }

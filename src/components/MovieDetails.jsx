@@ -1,196 +1,165 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import MovieNotFound from "./MovieNotFound";
+import { useParams } from "react-router-dom";
 import './MovieDetails.css'
-import ErrorPage from "./ErrorPage";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // import CSS for carousel
-import { useSelector } from "react-redux";
-
-
 
 const MovieDetails = () => {
     const apiKey = 'a1d7615b946e5e8a79a71f257fa86e96';
     const baseUrl = 'https://api.themoviedb.org/3/movie/';
-    const currentUser = useSelector((state) => state.user.currentUser);
 
-    const params = useParams();
+    const { movie_id } = useParams(); 
     
-    const [content, setContent] = useState(null);
-    const [movieId, setMovieId] = useState(null);
-
-    const [details, setDetails] = useState(null);
-    const [trailers, setTrailers] = useState(null);
-    const [recMovies, setRecMovies] = useState(null);
-
     const [isLoading, setIsLoading] = useState(true);
-
+    const [currentMovieDetail, setMovie] = useState(null);
+    const [trailers, setTrailers] = useState([]); 
+   
     const [comment, setComment] = useState("");
-  const [rating, setRating] = useState(0);
-  const [comments, setComments] = useState([]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Here you can save the comment and rating data to your backend or local storage
-    const newComment = {
-      comment: comment,
-      rating: rating,
-    };
-    setComments([...comments, newComment]);
-    setComment("");
-    setRating(0);
-  };
+    const [rating, setRating] = useState(0);
+    const [comments, setComments] = useState([]);
 
-  const handleRatingChange = (newRating) => {
-    setRating(newRating);
-  };
-
-  const handleCommentChange = (event) => {
-    setComment(event.target.value);
-  };
-
-  const renderStars = () => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      const starClass =
-        i <= rating ? "fa fa-star checked" : "fa fa-star unchecked";
-      stars.push(
-        <span
-          key={i}
-          className={starClass}
-          onClick={() => handleRatingChange(i)}
-        />
-      );
-    }
-    return stars;
-  };
-
-  const renderComments = () => {
-    return comments.map((c, index) => (
-      <div key={index} className="comment">
-        <p>Rating: {c.rating} stars</p>
-        <p>Comment: {c.comment}</p>
-      </div>
-    ));
-  };
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const newComment = {
+          comment: comment,
+          rating: rating,
+        };
+        setComments([...comments, newComment]);
+        setComment("");
+        setRating(0);
+      };
+    
+      const handleRatingChange = (newRating) => {
+        setRating(newRating);
+      };
+    
+      const handleCommentChange = (event) => {
+        setComment(event.target.value);
+      };
+    
+      const renderStars = () => {
+        const stars = [];
+        for (let i = 1; i <= 5; i++) {
+          const starClass =
+            i <= rating ? "fa fa-star checked" : "fa fa-star unchecked";
+          stars.push(
+            <span
+              key={i}
+              className={starClass}
+              onClick={() => handleRatingChange(i)}
+            />
+          );
+        }
+        return stars;
+      };
+    
+      const renderComments = () => {
+        return comments.map((c, index) => (
+          <div key={index} className="comment">
+            <p>Rating: {c.rating} stars</p>
+            <p>Comment: {c.comment}</p>
+          </div>
+        ));
+      };
 
     useEffect(() => {
-        loadPage();
-        console.log(currentUser)
+        getData();
+        window.scrollTo(0, 0);
     }, []);
 
-    const loadPage = () => {
-        if ('movie_id' in params) {
-            fetchData(params.movie_id);
-        }
-    }
+ const getData = () => {
+  setIsLoading(true);
+  Promise.all([
+    fetch(`${baseUrl}${movie_id}?api_key=${apiKey}&language=en-US`),
+    fetch(`${baseUrl}${movie_id}/videos?api_key=${apiKey}&language=en-US`)
+  ])
+  .then(([movieRes, videosRes]) => Promise.all([movieRes.json(), videosRes.json()]))
+  .then(([movieData, videosData]) => {
+    setMovie(movieData);
+    setTrailers(videosData.results);
+    
+  })
+  .catch(err => console.log(err))
+  .finally(() => setIsLoading(false));
+}
 
-    const fetchData = async (movie_id) => {
-        // handles the 3 api calls, makes sure that they are all completed before doing anything else
-        const detailsUrl = `${baseUrl}${movie_id}?api_key=${apiKey}&language=en-US`;
-        const trailerUrl = `${baseUrl}${movie_id}/videos?api_key=${apiKey}&language=en-US`;
-        const recommendationsUrl = `${baseUrl}${movie_id}/recommendations?api_key=${apiKey}&language=en-US`;
 
-        try {
-            setIsLoading(true);  
-            const [detailsResult, trailerResult, recResponse] = await Promise.all([
-                fetch(detailsUrl).then(res => res.json()),
-                fetch(trailerUrl).then(res => res.json()),
-                fetch(recommendationsUrl).then(res => res.json())
-            ]);
+    const createTrailers = () => {
+        const trailerLinks = [];
 
-            setDetails(detailsResult);
-            setTrailers(trailerResult.results);
-            setRecMovies(recResponse.results);
-            setIsLoading(false);
-            
-        } catch (error) {
-            setContent(
-                <ErrorPage errorCode={error}/>
-            )
-        }
-    }
-
-    useEffect(() => {
-        if (!isLoading) {
-            setContent(createContent());
-        }
-    }, [isLoading]);
-
-    const addToCart = () => {
-
-    }
-
-    const createContent = () => {
-
-        const title = details.original_title;
-        const overview = details.overview;
-        const genres = [];
-        details.genres.forEach(genre => {
-            genres.push(genre.name + ', ');
-        });
-        const language = details.original_language;
-        const poster = createImageUrl('w780', details.poster_path);
-
-        const companyLogoElements = [];
-        details.production_companies.forEach(company => {
-            const logoUrl = createImageUrl('w154', company.logo_path);
-
-            const logoElement = (
-                <img className="logo" src={logoUrl} alt=""/>
-            )
-
-            companyLogoElements.push(logoElement);
+        trailers.forEach(video => {
+            if (video.site === "YouTube" && video.type === "Trailer") {
+                const key = video.key
+                const link = `https://www.youtube.com/embed/${key}`
+                trailerLinks.push(link)
+            }
         });
 
+        if (trailerLinks.length === 0) {
+            return (
+                <img src="placeholder image" alt="No trailers found"></img>
+            )
+        } else {
+            const videoArray = [];
 
+            trailerLinks.forEach(link => {
+                const embeddedVideo = (
+                    <div>
+                        <iframe width="560" height="315" src={link} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowFullScreen></iframe>
+                    </div>
+                );
 
-        const releaseDate = details.release_date;
-        const runtime = details.runtime;
-        const voteAverage = details.vote_average;
-        const voteCount = details.vote_count;
-        
-        const trailerElements = createTrailers();
+                videoArray.push(embeddedVideo);
+            })
 
-        const recElement = createRecElement();
+            return videoArray;
+        }
+    }
 
-        return (
-            <div className="wrapper">
-                <header> </header>
-                <div>
-                    <div className="container">
-                        <header className="titleContainer">
-                            <h1>{title}</h1>
-                            <br/>
-                            <div className="movieInfo">
-                                <h4>Release Date: {releaseDate}</h4>
-                                <h4>Runtime: {runtime} min</h4>
-                                <h4>Genres: {genres}</h4>
-                            </div>
+    const trailerElements = createTrailers();
 
-                            
-                        </header>
-                        <br/>
-                        <div className="detailsContainer">
-                            
-                        
-                            <div className="imageContainer">
-                                <img className="poster" src={poster} alt={title + 'Poster'}/>
-                                <div className="logoContainer">
-                                    {companyLogoElements}
-                                </div>
-                            </div>
-
-                            <div className="summaryContainer">
-                                <h3>Summary:</h3>
-                                <p>
-                                    {overview}
-                                </p>
-                                <br/>
-                                <div className="trailerContainer">
-                                    {trailerElements}
-                                </div>
-                                <div>
+    return (
+        <div className="wrapper">
+            <div className="container">
+                <img className="recMoviesContainer" src={`https://image.tmdb.org/t/p/original${currentMovieDetail ? currentMovieDetail.backdrop_path : ""}`} />
+            </div>
+            <div className="tittleContainer">
+                <div className="movieInfo">
+                    <div className="detailsContainer"></div>
+                    <div className="imageContainer">
+                        <img className="postr" src={`https://image.tmdb.org/t/p/original${currentMovieDetail ? currentMovieDetail.poster_path : ""}`} />
+                    </div>
+                </div>
+                <div className="info_detailRight">
+                    <div className="info_detailRightTop">
+                        <div className="info_name">{currentMovieDetail ? currentMovieDetail.original_title : ""}</div>
+                        <div className="info_tagline">{currentMovieDetail ? currentMovieDetail.tagline : ""}</div>
+                        <div className="info_rating">
+                            {currentMovieDetail ? currentMovieDetail.vote_average: ""} <i class="fas fa-star" />
+                            <span className="info_voteCount">{currentMovieDetail ? "(" + currentMovieDetail.vote_count + ") votes" : ""}</span>
+                        </div>  
+                        <div className="info_runtime">{currentMovieDetail ? currentMovieDetail.runtime + " mins" : ""}</div>
+                        <div className="info_releaseDate">{currentMovieDetail ? "Release date: " + currentMovieDetail.release_date : ""}</div>
+                        <div className="info_genres">
+                            {
+                                currentMovieDetail && currentMovieDetail.genres
+                                ? 
+                                currentMovieDetail.genres.map(genre => (
+                                    <><span className="info_genre" id={genre.id}>{genre.name}</span></>
+                                )) 
+                                : 
+                                ""
+                            }
+                        </div>
+                  
+                    <div className="summaryContainer">
+                        <div className="summaryText">Summary</div>
+                        <div>{currentMovieDetail ? currentMovieDetail.overview : ""}</div>
+                                            <div className="trailerContainer">
+  <h2>Trailers</h2>
+  <div className="videoContainer">{trailerElements}</div>
+  </div>
+                    </div>
+                    <div>
       <form onSubmit={handleSubmit}>
         <label>
           Comment:
@@ -206,149 +175,30 @@ const MovieDetails = () => {
       </form>
       <div className="comments">{renderComments()}</div>
     </div>
-                            </div>
-
-                        </div>
-
-                        <br />
-                        <div className="recMoviesContainer">
-                            {recElement}
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <footer> </footer>
-            </div>
-        )
-    }
-
-    const createImageUrl = (size, key) => {
-        const url = `http://image.tmdb.org/t/p/${size}${key}`
-        return url;
-    }
-
-    const createRecElement = () => {
-
-        const recPageElements = [];
-
-        const recMoviePages = [];
-        const size = 1;
-
-        for (let i = 0; i < recMovies.length; i += size) {
-            const chunk = recMovies.slice(i, i + size);
-            recMoviePages.push(chunk);
-        }
-        
-        recMoviePages.forEach(page => {
-            const movieElements = [];
-
-            page.forEach(movie => {
-                const posterKey = movie.poster_path;
-                const poster = createImageUrl('w342', posterKey);
-                const title = movie.title;
-                const voteAverage = movie.vote_average;
-                
-
-                const element = (
-                    <div className="recMovieContainer">
-                        <Link to={`/movie/${movie.id}`} onClick={() => fetchData(movie.id)}>
-                            <div className="recPosterContainer">
-                                <img className="recPoster" src={poster} alt={title + ' poster'}/>
-                            </div>
-                            <div className="recTextContainer">
-                                <h5>{title}</h5>
-                                <h6>{voteAverage}</h6>
-                            </div>
-                        </Link>
-                    </div>
-                )
-
-                if (posterKey != null) {
-                    movieElements.push(element);
+</div>
+            <div className="logo_heading">Production companies</div>
+            <div className="logo_production">
+                {
+                    currentMovieDetail && currentMovieDetail.production_companies && currentMovieDetail.production_companies.map(company => (
+                        <>
+                            {
+                                company.logo_path 
+                                && 
+                                <span className="logoContainer">
+                                    <img className="logo" src={"https://image.tmdb.org/t/p/original" + company.logo_path} />
+                                    <span>{company.name}</span>
+                                </span>
+                            }
+                        </>
+                    ))
                 }
-            });
-
-            const pageElement = (
-                <div className="recPage">
-                    {movieElements}
-                </div>
-            );
-
-            recPageElements.push(pageElement);
-
-            
-
-            
-        });
-
-        const recMoviesElement = (
-            <div className="recMoviesElement">
-                <Carousel infiniteLoop={true} showThumbs={false} autoPlay={true} centerMode={true} showStatus={false}>
-                    {recPageElements}
-                </Carousel>
             </div>
-        );
-
-
-
-        return recMoviesElement;
-    }
-
-    const createTrailers = () => {
-        const trailerLinks = [];
-
-
-        trailers.forEach(video => {
-            if (video.site === "YouTube" && video.type === "Trailer") {
-                const key = video.key
-          
-                const link = `https://www.youtube.com/embed/${key}`
-                trailerLinks.push(link)
-              }
-        });
-
-        if (trailerLinks.length == 0) {
-            // if a movie does not have any trailers on youtube, put a placeholder image or something
-            return (
-                <img src="placeholder image" alt="No trailers found"></img>
-            )
-        }
-        else {
-            const videoArray = [];
-
-            trailerLinks.forEach(link => {
-                const embeddedVideo = (
-                    <div>
-                        <iframe width="560" height="315" src={link} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowFullScreen></iframe>
-                    </div>
-                );
-
-                videoArray.push(embeddedVideo);
-            })
-
-            return(videoArray);
-
-        }
-    }
-
-    const putErrorPage = () => {
-        const errorPage = (
-            <MovieNotFound />
-        )
-
-        setContent(errorPage);
-    }
-
-
-    return (
-        <div>
-            {content}
-        </div>
+                     
+            
+            </div>
+            </div>
+</div>
+       
     )
-
-
 }
-
 export default MovieDetails;
