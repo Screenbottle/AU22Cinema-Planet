@@ -50,6 +50,15 @@ const Header = () => {
           <span>signup</span>
         </Link>
       </div>
+      <div className="headerRight">
+        <Link to="/cart">
+          <img
+            className="header__cartIcon"
+            src="https://user-images.githubusercontent.com/113544188/236866391-56ce7702-7d4f-4b3b-8d58-f6725c68173f.png"
+            alt="Cart"
+          />
+        </Link>
+      </div>
     </div>
   );
 };
