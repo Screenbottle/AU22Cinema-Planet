@@ -5,7 +5,7 @@ import './MovieDetails.css'
 const MovieDetails = () => {
     const apiKey = 'a1d7615b946e5e8a79a71f257fa86e96';
     const baseUrl = 'https://api.themoviedb.org/3/movie/';
-    
+
     const { movie_id } = useParams(); 
     
     const [isLoading, setIsLoading] = useState(true);
@@ -13,6 +13,7 @@ const MovieDetails = () => {
     const [trailers, setTrailers] = useState([]); 
    
     const [comment, setComment] = useState("");
+
     const [rating, setRating] = useState(0);
     const [comments, setComments] = useState([]);
 
@@ -65,7 +66,6 @@ const MovieDetails = () => {
         window.scrollTo(0, 0);
     }, []);
 
-   
  const getData = () => {
   setIsLoading(true);
   Promise.all([
