@@ -7,6 +7,7 @@ import MovieList from './components/MovieList'
 import MovieSearch from './MovieSearch';
 import MovieDetails from './components/MovieDetails';
 import MovieNotFound from './components/MovieNotFound';
+import ShoppingCart from './components/ShoppingCart'
 import Signup from './components/Signup';
 import { auth } from './firebase';
 
@@ -20,6 +21,7 @@ function App() {
     <div className="App">
         <Header />
         <Routes>
+          <Route path='/shoppingcart' element={<ShoppingCart/>}></Route>
           <Route exact path="/" element={<Home />}></Route>
           <Route path="movies/:type" element={<MovieList />}></Route>
           <Route path='/movie/:movie_id' element= {
