@@ -4,20 +4,19 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { CartIcon } from "../features/Icon";
 import { auth } from '../firebase';
+import { signOut } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { actions } from '../features/firebaseRedux';
 
 const Header = () => {
 
-  const amount = useSelector((store) => store.cart.amount)
-
+  const amount = 0;
+  const currentUser = useSelector(state => state.user.currentUser);
   const dispatch = useDispatch();
 
   const handleLogout = () => {               
     signOut(auth).then(() => {
       dispatch(actions.setCurrentUser(null));
-      // Sign-out successful.
-
       navigate("/");
       console.log("Signed out successfully")
     }).catch((error) => {
@@ -51,12 +50,25 @@ const Header = () => {
     
       </div>
       <div className="headerRight">
-         <Link to="/login">
-          <span>Login</span>
-        </Link>
-        <Link to="/signup">
-          <span>signup</span>
-        </Link>
+        {currentUser ? (
+          <Link to="/">
+            <span onClick={handleLogout}>
+              Sign out
+            </span>
+          </Link>
+        ) : (
+          <div>
+            <Link to="/login">
+              <span>Login</span>
+            </Link>
+            <Link to="/signup">
+              <span>Sign up</span>
+            </Link>
+          </div>
+        )
+        }
+         
+        
         <Link to='/ShoppingCart'> 
           <img
             className="header__cartIcon"

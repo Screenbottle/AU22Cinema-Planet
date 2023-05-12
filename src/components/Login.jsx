@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {  signInWithEmailAndPassword   } from 'firebase/auth';
 import { auth } from '../firebase';
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from "react-redux";
 import { actions } from '../features/firebaseRedux';
 
@@ -91,9 +91,9 @@ const Login = () => {
                        
                     <p className="text-sm text-white text-center">
                         No account yet? {' '}
-                        <NavLink to="/signup">
+                        <Link to="/signup">
                             Sign up
-                        </NavLink>
+                        </Link>
                     </p>
                                                    
                 </div>
