@@ -160,20 +160,7 @@ return (
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        <div className="search-type">
-          <button
-            className={`search-type-button ${searchType === 'movie' ? 'active' : ''}`}
-            onClick={() => handleSearchTypeChange('movie')}
-          >
-            Movies
-          </button>
-          <button
-            className={`search-type-button ${searchType === 'tv' ? 'active' : ''}`}
-            onClick={() => handleSearchTypeChange('tv')}
-          >
-            TV Series
-          </button>
-        </div>
+        
       </div>
   
       <div className="categories">
@@ -185,7 +172,24 @@ return (
           >
             {genres[id]}
           </span>
+
+
+
+
         ))}
+        <span
+  className={`search-type-button ${searchType === 'movie' ? 'active' : ''}`}
+  onClick={() => handleSearchTypeChange('movie')}
+>
+  Movies
+</span>
+<span
+  className={`search-type-button ${searchType === 'tv' ? 'active' : ''}`}
+  onClick={() => handleSearchTypeChange('tv')}
+>
+  TV Series
+</span>
+      
       </div>
 
       <div className="poster">
