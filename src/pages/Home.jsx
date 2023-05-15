@@ -11,6 +11,8 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchType, setSearchType] = useState("movie");
+  const [sortOption, setSortOption] = useState("popularity.desc");
+
 
   useEffect(() => {
     const API_KEY = "34a3a84e40cb412a83d35dc3d683b406";
@@ -80,40 +82,25 @@ const Home = () => {
   const renderSearchResults = () => {
     if (popularMovies.length === 0) {
       return <p>No results found.</p>;
+      const sortResults = (results) => {
+        if (sortOption === "popularity.desc") {
+          // Sort by popularity in descending order
+          return results.sort((a, b) => b.popularity - a.popularity);
+        } else if (sortOption === "vote_average.desc") {
+          // Sort by vote average in descending order
+          return results.sort((a, b) => b.vote_average - a.vote_average);
+        } else {
+          // Default: don't apply any sorting
+          return results;
+        }
+      };
+    
+      const sortedMovies = sortResults(popularMovies);
+    
+      if (sortedMovies.length === 0) {
+        return <p>No results found.</p>;
+      }
     }
-
-    const fetchTVSeries = (category) => {
-      let url = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US`;
-    
-      if (category !== "") {
-        url += `&with_genres=${category}`;
-      }
-    
-      fetch(url)
-        .then((res) => res.json())
-        .then((data) => setPopularMovies(data.results))
-        .catch((error) => {
-          console.log("Error fetching TV series:", error);
-          setPopularMovies([]);
-        });
-    };
-    
-    const fetchMovies = (category) => {
-      let url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US`;
-    
-      if (category !== "") {
-        url += `&with_genres=${category}`;
-      }
-    
-      fetch(url)
-        .then((res) => res.json())
-        .then((data) => setPopularMovies(data.results))
-        .catch((error) => {
-          console.log("Error fetching movies:", error);
-          setPopularMovies([]);
-        });
-    };
-    
 
 return (
   <ul className="movies-grid">
@@ -150,18 +137,33 @@ return (
       </ul>
     );
   };
-
+  
   return (
     <div className="Home">
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Search Movie/Serie"
+          placeholder="Search Movie/Series"
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        
+        <div className="search-type-buttons">
+          <span
+            className={`search-type-button ${searchType === 'movie' ? 'active' : ''}`}
+            onClick={() => handleSearchTypeChange('movie')}
+          >
+            Movies
+          </span>
+          <span
+            className={`search-type-button ${searchType === 'tv' ? 'active' : ''}`}
+            onClick={() => handleSearchTypeChange('tv')}
+          >
+            TV Series
+          </span>
+        </div>
       </div>
+   
+  
   
       <div className="categories">
         {Object.keys(genres).map((id) => (
@@ -177,19 +179,6 @@ return (
 
 
         ))}
-        <span
-  className={`search-type-button ${searchType === 'movie' ? 'active' : ''}`}
-  onClick={() => handleSearchTypeChange('movie')}
->
-  Movies
-</span>
-<span
-  className={`search-type-button ${searchType === 'tv' ? 'active' : ''}`}
-  onClick={() => handleSearchTypeChange('tv')}
->
-  TV Series
-</span>
-      
       </div>
 
       <div className="poster">
