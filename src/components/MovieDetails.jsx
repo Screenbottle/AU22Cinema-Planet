@@ -203,7 +203,8 @@ const MovieDetails = () => {
 
             <div className="summaryContainer">
               <div className="summaryText">Summary</div>
-              <div>{currentMovieDetail ? currentMovieDetail.overview : ""}</div>
+              <div>{currentMovieDetail ? currentMovieDetail.overview : ""}
+              </div>
               <div className="trailerContainer">
                 <h2>Trailers</h2>
                 <div className="videoContainer">{trailerElements}</div>
@@ -225,6 +226,7 @@ const MovieDetails = () => {
               </form>
               <div className="comments">{renderComments()}</div>
             </div>
+            
           </div>
           <div className="logo_heading">Production companies</div>
           <div className="logo_production">

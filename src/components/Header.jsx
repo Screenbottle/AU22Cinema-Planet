@@ -35,6 +35,9 @@ const Header = () => {
             src="https://raw.githubusercontent.com/alex88g/Images/main/Images/earth3.png"
             alt="Logo"
           />
+          <div className="tittle">
+          <span>Cinema Planet</span>
+          </div>
         </Link>
         <Link to="/movies/popular">
           <span>Popular</span>
@@ -62,7 +65,6 @@ const Header = () => {
               <span>Login</span>
             </Link>
             <Link to="/signup">
-              <span>Sign up</span>
             </Link>
           </div>
         )
