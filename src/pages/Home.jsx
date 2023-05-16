@@ -36,8 +36,6 @@ const Home = () => {
       const sortedMovies = sortResults(data.results); // Sort the movies based on the selected sort option
       setPopularMovies(sortedMovies);
     });
-  
-      
 
     fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`)
       .then((res) => res.json())
