@@ -2,14 +2,14 @@ import React from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { CartIcon } from "../features/Icon";
+  
 import { auth } from '../firebase';
 import { useDispatch } from "react-redux";
 import { actions } from '../features/firebaseRedux';
 
 const Header = () => {
 
-  const amount = useSelector((store) => store.cart.amount)
+  // const amount = useSelector((store) => store.cart.amount);
 
   const dispatch = useDispatch();
 
