@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase";
-import { collection, addDoc, doc, getDoc, getDocs } from "firebase/firestore"; 
+import { collection, addDoc, doc, getDoc, getDocs, setDoc } from "firebase/firestore"; 
 import "./MovieDetails.css";
+import { readComments, uploadComment } from "../features/firestoreComments";
 
 const MovieDetails = () => {
   const apiKey = "a1d7615b946e5e8a79a71f257fa86e96";
@@ -25,7 +26,7 @@ const MovieDetails = () => {
       comment: comment,
       rating: rating,
     };
-    addDoc(collection(db, movie_id), newComment);
+    uploadComment(movie_id, newComment);
   
     setComments([...comments, newComment]);
     setComment("");
@@ -90,16 +91,11 @@ const MovieDetails = () => {
       .finally(() => setIsLoading(false));
   };
 
-  const getComments = async () => {
-    const commentList = [];
-
-    const querySnapshot = await getDocs(collection(db, movie_id));
-    querySnapshot.forEach((doc) => {
-      const comment = doc.data();
-      commentList.push(comment);
-    })
-
-    setComments(commentList);
+  const getComments = () => {
+    readComments(movie_id)
+      .then((response) => {
+        setComments(response);
+      })
   }
 
   const createTrailers = () => {
@@ -116,27 +112,20 @@ const MovieDetails = () => {
     if (trailerLinks.length === 0) {
       return <img src="placeholder image" alt="No trailers found"></img>;
     } else {
-      const videoArray = [];
 
-      trailerLinks.forEach((link) => {
-        const embeddedVideo = (
-          <div>
-            <iframe
-              width="560"
-              height="315"
-              src={link}
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
-              allowFullScreen
-            ></iframe>
-          </div>
-        );
-
-        videoArray.push(embeddedVideo);
-      });
-
-      return videoArray;
+      return trailerLinks.map((link, index) => (
+        <div key={index}>
+          <iframe
+            width="560"
+            height="315"
+            src={link}
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
+            allowFullScreen
+          ></iframe>
+        </div>
+      ))
     }
   };
 
@@ -174,7 +163,7 @@ const MovieDetails = () => {
             </div>
             <div className="info_rating">
               {currentMovieDetail ? currentMovieDetail.vote_average : ""}{" "}
-              <i class="fas fa-star" />
+              <i className="fas fa-star" />
               <span className="info_voteCount">
                 {currentMovieDetail
                   ? "(" + currentMovieDetail.vote_count + ") votes"
