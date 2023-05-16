@@ -190,6 +190,34 @@ a.cinema img{
  
 }
 
+.search-type-buttons {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.search-type-button {
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.search-type-button.active {
+  background-color: #555;
+  color: #fff;
+}
+
+.search-type-button:hover {
+  background-color: #eee;
+}
+
+
+
 .categories {
   display: flex;
   flex-wrap: wrap;
