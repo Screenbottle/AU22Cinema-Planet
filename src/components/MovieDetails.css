@@ -4,77 +4,77 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.container {
+  }
+  
+  .container {
   width: 80%;
-}
-
-.recMoviesContainer {
+  }
+  
+  .recMoviesContainer {
   width: 100%;
   height: 500px;
   object-fit: cover;
   object-position: 0 35%;
-}
-
-.tittleContainer {
+  }
+  
+  .tittleContainer {
   align-items: center;
   width: 75%;
   display: flex;
   position: relative;
   bottom: 225px;
-}
-
-.movieInfo {
+  }
+  
+  .movieInfo {
   margin-right: 30px;
-}
-
-.postr {
+  }
+  
+  .postr {
   width: 300px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.86) 0px 22px 40px 6px;
-}
-
-.info_detailRight {
+  }
+  
+  .info_detailRight {
   color: white;
   display: flex;
   flex-direction: column;
   height: 450px;
   justify-content: space-between;
-}
-
-.info_detailRightTop > div {
+  }
+  
+  .info_detailRightTop > div {
   text-shadow: 0px 0px 5px #000000;
   margin-bottom: 0.5rem;
-}
-
-.info_name {
+  }
+  
+  .info_name {
   font-weight: 600;
   font-size: 3rem;
-}
-
-.info_voteCount {
+  }
+  
+  .info_voteCount {
   margin-left: 1rem;
-}
-
-.info_genres {
+  }
+  
+  .info_genres {
   margin: 1.25rem 0;
-}
-
-.info_genre {
+  }
+  
+  .info_genre {
   padding: 0.5rem;
   border: 2px solid white;
   border-radius: 20px;
   margin-right: 1rem;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
-
-.summaryContainer {
+  }
+  
+  .summaryContainer {
   margin: 2rem 0;
   flex: 0.8;
-}
-
-.summaryText {
+  }
+  
+  .summaryText {
   margin-top: 60px;
   font-size: 1.5rem;
   margin-bottom: 1.25rem;
@@ -82,80 +82,80 @@
   display: flex;
   position: relative;
   align-items: center;
-}
-
-.summaryText > div:last-of-type {
+  }
+  
+  .summaryText > div:last-of-type {
   margin-left: auto;
-}
-
-.logo_heading {
+  }
+  
+  .logo_heading {
   margin-left: 250px;
   margin-top: 100px;
   font-size: 2.2rem;
   color: white;
-}
-
-.newTab {
+  }
+  
+  .newTab {
   margin-left: 1.4rem;
-}
-
-.logo_production {
-  width: 85%;
+  }
+  
+  .logo_production {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: flex-end;
   margin-bottom: 4rem;
   color: white;
-}
-
-.logoContainer {
+  }
+  
+  .logoContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.logo {
+  
+  }
+  
+  .logo {
   width: 200px;
   margin: 2rem;
-}
-
-.trailerContainer {
+  
+  }
+  
+  .trailerContainer {
   max-width: 800px;
-  margin: 0 auto;
   padding: 20px;
-}
-
-.trailerContainer h2 {
+  }
+  
+  .trailerContainer h2 {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 20px;
-}
-
-.videoContainer {
+  }
+  
+  .videoContainer {
   margin-right: 300px;
   display: grid;
   gap: 20px;
-}
-
-.videoContainer div {
+  }
+  
+  .videoContainer div {
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
-}
-
-.videoContainer iframe {
+  }
+  
+  .videoContainer iframe {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-.comment-box {
-  display: flex
-;
-    flex-direction: column;
+  }
+  
+  .comment-box {
+  display: flex;
+  flex-direction: column;
     align-items: center;
     margin: 20px;
   }
@@ -186,36 +186,26 @@
     color: yellow;
   }
   
-  .comment-button {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
   .comment-button:hover {
     background-color: #3e8e41;
   }
-  
   .comments {
     margin-top: 20px;
   }
   
   .comment {
     border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+    padding: 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+   
   }
   
   
-  
-  
   .comment-button {
-    background-color: #008CBA;
+    background-color:  #616161;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -228,7 +218,7 @@
   }
   
   .comment-button:hover {
-    background-color: #006B8C;
+      background-color:rgb(171, 171, 171);
   }
   
   textarea {
@@ -245,22 +235,5 @@
     display: inline-block;
   }
   
-  .checked {
-    color: yellow;
-  }
   
-  .unchecked {
-    color: #ddd;
-  }
   
-  .comments {
-    margin-top: 20px;
-  }
-  
-  .comment {
-    background-color: #ffffff;
-    color: black;
-    padding: 20px;
-    margin-top: 10px;
-    border-radius: 5px;
-  }

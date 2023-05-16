@@ -6,6 +6,13 @@
   height: 5px;
 }
 
+@media only screen and (max-width: 600px) {
+  .header {
+    margin: 0 1rem;
+    padding: 1rem 0;
+    height: 3px;
+  }
+}
 .headerLeft, .headerRight {
   display: flex;
   align-items: center;
@@ -40,7 +47,6 @@ a > span:hover {
   height: 40px;
   object-fit: contain;
   cursor: pointer;
-  margin-top: 20px;
 }
 
 .header__cartIcon:hover {
@@ -58,86 +64,5 @@ a > span:hover {
   color: red;
 }
 
-h1 {
-  color: white;
-  font-size: medium;
-  margin-left: 680px;
-  padding-right: 3rem;
-  cursor: pointer;
-}
 
-h1:hover {
-  opacity: 0.8;
-}
 
-h2 {
-  color: white;
-  font-size: medium;
-}
-
-/* Media queries */
-@media only screen and (max-width: 600px) {
-  .header {
-    margin: 0 1rem;
-    padding: 1rem 0;
-    height: 3px;
-  }
-
-  a > span {
-    font-size: 1rem;
-    margin: 0 15px;
-  }
-
-  .header__cartIcon {
-    height: 30px;
-    margin-top: 10px;
-  }
-
-  .header__login {
-    margin-left: 15px;
-    font-size: 1rem;
-  }
-
-  h1 {
-    margin-left: 100px;
-    padding-right: 1rem;
-    font-size: small;
-  }
-
-  h2 {
-    font-size: small;
-  }
-}
-
-@media only screen and (min-width: 601px) {
-  .header {
-    margin: 0 2.5rem;
-    padding: 2.5rem 0;
-    height: 5px;
-  }
-
-  a > span {
-    font-size: 1.3rem;
-    margin: 0 30px;
-  }
-
-  .header__cartIcon {
-    height: 40px;
-    margin-top: 20px;
-  }
-
-  .header__login {
-    margin-left: 30px;
-    font-size: 1.3rem;
-  }
-
-  h1 {
-    margin-left: 680px;
-    padding-right: 3rem;
-    font-size: medium;
-  }
-
-  h2 {
-    font-size: medium;
-  }
-}

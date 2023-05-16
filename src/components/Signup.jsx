@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, {useState} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
-
+import './Signup.css';
 
 const Signup = () => {
 
@@ -40,15 +40,13 @@ const Signup = () => {
     }
 
     return (
-        <div>
-            <section>
-                <div>
-                    <div>
+        <div className="signup-container">
+            <section className="signup-section">
+                    <div className="signup-form-container">
+                    <p className="signup-text">Sign up to your account!</p>
                         <form>                                                                                            
                             <div>
-                                <label htmlFor="email-address">
-                                    Email address
-                                </label>
+                                  <label htmlFor="email-address">Email address</label>
                                 <input
                                     type="email"
                                     label="Email address"
@@ -60,9 +58,7 @@ const Signup = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="password">
-                                    Password
-                                </label>
+                                <label htmlFor="password"> Password</label>
                                 <input
                                     type="password"
                                     label="Create password"
@@ -78,24 +74,20 @@ const Signup = () => {
                             {errorElement}
 
                             <br/>
-                        
+                        <div>
                             <button
-                                type="submit" 
-                                onClick={onSubmit}                        
-                            >  
-                                Sign up                                
-                            </button>
-                                                                     
+                                className="signup-form-button"
+                                onClick={onSubmit}>Sign up</button>
+                            </div>                                         
                         </form>
-                   
-                        <p>
+                    <p className="signup-form-link">
                             Already have an account?{' '}
-                            <NavLink to="/login" >
+                            <NavLink to="/login" className="login-link">
                                 Sign in
                             </NavLink>
                         </p>                   
                     </div>
-                </div>
+                
             </section>
         </div>
     );

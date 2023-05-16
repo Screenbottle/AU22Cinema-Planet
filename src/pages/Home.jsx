@@ -14,6 +14,7 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchType, setSearchType] = useState("movie");
   const dispatch = useDispatch();
+  const [sortOption, setSortOption] = useState("popularity");
 
   useEffect(() => {
     const API_KEY = "34a3a84e40cb412a83d35dc3d683b406";
@@ -27,9 +28,16 @@ const Home = () => {
       url = `https://api.themoviedb.org/3/search/${searchType}?api_key=${API_KEY}&language=en-US&query=${searchQuery}`;
     }
 
+    if (sortOption === "rating") {
+      url += "&sort_by=vote_average.desc";
+    }
+
     fetch(url)
-      .then((res) => res.json())
-      .then((data) => setPopularMovies(data.results));
+    .then((res) => res.json())
+    .then((data) => {
+      const sortedMovies = sortResults(data.results); // Sort the movies based on the selected sort option
+      setPopularMovies(sortedMovies);
+    });
 
     fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`)
       .then((res) => res.json())
@@ -40,7 +48,7 @@ const Home = () => {
         });
         setGenres(genresObj);
       });
-  }, [selectedCategory, searchQuery, searchType]);
+  }, [selectedCategory, searchQuery, searchType, sortOption]);
 
   const imageBaseUrl = "https://image.tmdb.org/t/p/w780/";
 
@@ -78,47 +86,45 @@ const Home = () => {
       fetchTVSeries(category);
     }
   };  
+
+  const handleSortOptionChange = (option) => {
+    if (option === "popularity") {
+      setSortOption("popularity");
+    } else if (option === "rating") {
+      setSortOption("rating");
+      setSelectedCategory("");
+    }
+  };
   
 
-  const renderSearchResults = () => {
-    if (popularMovies.length === 0) {
-      return <p>No results found.</p>;
+  const sortResults = (results) => {
+    if (sortOption === "popularity") {
+      // Sort by popularity in descending order
+      return [...results].sort((a, b) => b.popularity - a.popularity);
+    } else if (sortOption === "rating") {
+      // Sort by vote average in descending order
+      return [...results].sort((a, b) => b.vote_average - a.vote_average);
+    } else {
+      // Default: don't apply any sorting
+      return results;
     }
+  };
+  
 
-    const fetchTVSeries = (category) => {
-      let url = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US`;
-    
-      if (category !== "") {
-        url += `&with_genres=${category}`;
-      }
-    
-      fetch(url)
-        .then((res) => res.json())
-        .then((data) => setPopularMovies(data.results))
-        .catch((error) => {
-          console.log("Error fetching TV series:", error);
-          setPopularMovies([]);
-        });
-    };
-    
-    const fetchMovies = (category) => {
-      let url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US`;
-    
-      if (category !== "") {
-        url += `&with_genres=${category}`;
-      }
-    
-      fetch(url)
-        .then((res) => res.json())
-        .then((data) => setPopularMovies(data.results))
-        .catch((error) => {
-          console.log("Error fetching movies:", error);
-          setPopularMovies([]);
-        });
-    };
-    
+const renderSearchResults = () => {
+  if (popularMovies.length === 0) {
+    return <p>No results found.</p>;
+  }
+
+  const sortedMovies = sortResults(popularMovies);
+
+  if (sortedMovies.length === 0) {
+    return <p>No results found.</p>;
+  }
 
 return (
+  <div>
+
   <ul className="movies-grid">
     {popularMovies.map((movie) => {
       const {
@@ -153,33 +159,46 @@ return (
           );
         })}
       </ul>
+      </div>
     );
   };
-
+  
   return (
     <div className="Home">
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Search Movie/Serie"
+          placeholder="Search Movie/Series"
           value={searchQuery}
           onChange={handleSearchChange}
         />
-        <div className="search-type">
-          <button
+        <div className="search-type-buttons">
+          <span
             className={`search-type-button ${searchType === 'movie' ? 'active' : ''}`}
             onClick={() => handleSearchTypeChange('movie')}
           >
             Movies
-          </button>
-          <button
+          </span>
+          <span
             className={`search-type-button ${searchType === 'tv' ? 'active' : ''}`}
             onClick={() => handleSearchTypeChange('tv')}
           >
             TV Series
-          </button>
+          </span>
         </div>
-      </div>
+
+        <div className="sort-by">
+  <span>Sort By:</span>
+  <select value={sortOption} onChange={(e) => handleSortOptionChange(e.target.value)}>
+    <option value="popularity">Popularity</option>
+    <option value="rating">Rating</option>
+  </select>
+</div>
+</div>
+
+
+   
+  
   
       <div className="categories">
         {Object.keys(genres).map((id) => (

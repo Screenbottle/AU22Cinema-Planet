@@ -1,0 +1,77 @@
+.login-container {
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url(https://repository-images.githubusercontent.com/631246320/fa59ba5a-b290-4dff-8532-f5c35150d7d2);
+}
+
+.login-section {
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to right, #211f22, #7d7b7f);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 25rem;
+  width: 100%;
+  text-align: center;
+  height: 400px;
+}
+
+login-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-text {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+form label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+form input {
+  width: 100%;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form button {
+  background-color:  #616161;
+  color: #fff;
+  width: 400px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: 20px;
+}
+
+form button:hover {
+  background-color:rgb(171, 171, 171);
+}
+
+.signup-link {
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+}

@@ -138,8 +138,10 @@ a {
   align-items: center;
   padding: 1rem;
 }
-.poster:hover .poster-overlay {
-  opacity: 1;
+.poster:hover .poster-overlay{
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  opacity: 0.8;
+
 }
 .movie-info-items {
   margin: 0.5rem 0;
@@ -157,29 +159,13 @@ a {
   font-size: 16px;
   width: 50%;
   box-sizing: border-box;
-} */
-
-button {
-  background-color: #4CAF50;
-  border-radius: 10px;
-  color: white;
-  padding: 12px 24px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 13px;
-  margin: 0px;
-  cursor: pointer;
-  
 }
+
 
 button.active {
   background-color: #555;
 }
 
-button:hover {
-  background-color: #3e8e41;
-}
 a.buy-now img {
   width: 30px;
   height: 30px; 
@@ -203,6 +189,34 @@ a.cinema img{
   border-radius: 5px;
  
 }
+
+.search-type-buttons {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.search-type-button {
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.search-type-button.active {
+  background-color: #555;
+  color: #fff;
+}
+
+.search-type-button:hover {
+  background-color: #eee;
+}
+
+
 
 .categories {
   display: flex;
