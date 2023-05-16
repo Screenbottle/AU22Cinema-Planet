@@ -10,7 +10,7 @@ import MovieNotFound from './components/MovieNotFound';
 import ShoppingCart from './components/ShoppingCart'
 import Signup from './components/Signup';
 import { auth } from './firebase';
-
+import Checkout from './components/Checkout'
 import './App.css'
 import Login from './components/Login'
 
@@ -21,6 +21,7 @@ function App() {
     <div className="App">
         <Header />
         <Routes>
+          <Route path='/checkout' element={<Checkout/>}> </Route>
           <Route path='/shoppingcart' element={<ShoppingCart/>}></Route>
           <Route exact path="/" element={<Home />}></Route>
           <Route path="movies/:type" element={<MovieList />}></Route>

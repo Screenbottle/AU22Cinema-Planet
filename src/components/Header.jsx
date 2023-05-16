@@ -2,7 +2,7 @@ import React from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { CartIcon } from "../features/Icon";
+  
 import { auth } from '../firebase';
 import { signOut } from "firebase/auth";
 import { useDispatch } from "react-redux";

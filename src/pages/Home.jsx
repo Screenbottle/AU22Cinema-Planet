@@ -4,15 +4,17 @@ import { Link } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { auth } from '../firebase';
-
+import { useDispatch } from "react-redux";
+import { addToCart } from "../features/cartSlice";
+import ShoppingCart from "../components/ShoppingCart";
 const Home = () => {
   const [popularMovies, setPopularMovies] = useState([]);
   const [genres, setGenres] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchType, setSearchType] = useState("movie");
+  const dispatch = useDispatch();
   const [sortOption, setSortOption] = useState("popularity");
-
 
   useEffect(() => {
     const API_KEY = "34a3a84e40cb412a83d35dc3d683b406";
@@ -133,8 +135,10 @@ return (
         genre_ids,
         backdrop_path,
       } = movie;
+      
 
       return (
+        
         <li key={id}>
           <Link to={`/movie/${id}`}>
             <img src={imageBaseUrl + backdrop_path} alt={mediaTitle} />
@@ -143,7 +147,7 @@ return (
                   <p className="movie-info-item">Release Date: <span>{release_date}</span></p>
                   <p className="movie-info-item">Rating: <span><Rating rating={vote_average} /></span></p>
                   <p className="movie-info-item">Genres: <span>{genre_ids.map((id) => genres[id]).join(", ")}</span></p>
-                  <Link to={``}>
+                  <Link to={`/ShoppingCart`}onClick={()=> dispatch(addToCart(movie))}  >
                     <a className="buy-now">
                       <span><h2><img src="https://pngimg.com/uploads/plus/plus_PNG26.png" alt="Plus Icon" /> Buy Now</h2></span>
                     </a>
