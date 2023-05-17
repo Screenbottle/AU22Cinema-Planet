@@ -39,13 +39,19 @@ export const emptyCart = async () => {
     });
 }
 
-export const addToLibrary = async (purchasedItems) => {
+export const getCart = async () => {
     const currentUser = useSelector(state => state.user.currentUser);
     const uid = currentUser.uid;
 
-    const collectionRef = collection(db, "users", uid, "library");
+    const collectionRef = collection(db, "users", uid, "cart");
 
-    purchasedItems.forEach(item => {
-        addDoc(collectionRef, item);
+    const cartItems = [];
+
+    const querySnapshot = await getDocs(collectionRef);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      cartItems.push(doc.data());
     });
+
+    return cartItems;
 }
