@@ -56,6 +56,8 @@ const Home = () => {
     const stars = Math.round(rating / 2);
     const emptyStars = 5 - stars;
 
+   
+
     return (
       <div className="rating">
         {[...Array(stars)].map((_, index) => (
@@ -123,6 +125,8 @@ const renderSearchResults = () => {
   }
 
 return (
+
+  
   <div>
 
   <ul className="movies-grid">
@@ -164,15 +168,11 @@ return (
   };
   
   return (
+
+    <section>
     <div className="Home">
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search Movie/Series"
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
-        <div className="search-type-buttons">
+
+<div className="btn1">
           <span
             className={`search-type-button ${searchType === 'movie' ? 'active' : ''}`}
             onClick={() => handleSearchTypeChange('movie')}
@@ -185,7 +185,7 @@ return (
           >
             TV Series
           </span>
-        </div>
+        
 
         <div className="sort-by">
   <span>Sort By:</span>
@@ -194,13 +194,21 @@ return (
     <option value="rating">Rating</option>
   </select>
 </div>
+  </div>
+      <div className="search-bar">
+        
+        <input
+          type="text"
+          placeholder="Search Movie/Series"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+ 
 </div>
 
+         
 
-   
-  
-  
-      <div className="categories">
+ <div className="categories">
         {Object.keys(genres).map((id) => (
           <span
             key={id}
@@ -250,6 +258,7 @@ return (
       </div>
       {renderSearchResults()}
     </div>
+    </section>
   );
 };
 

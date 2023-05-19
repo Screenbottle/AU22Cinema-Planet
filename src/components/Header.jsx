@@ -52,6 +52,8 @@ const Header = () => {
 
     
       </div>
+
+      
       <div className="headerRight">
         {currentUser ? (
           <Link to="/">
