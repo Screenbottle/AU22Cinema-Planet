@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
+import './Checkout.css';
 
 
 const Checkout = () => {

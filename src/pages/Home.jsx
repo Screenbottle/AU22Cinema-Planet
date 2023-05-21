@@ -237,6 +237,7 @@ return (
               genre_ids,
               backdrop_path,
             } = movie;
+            
             return (
               <div key={id}>
                 <Link to={`/movie/${id}`}>

@@ -61,3 +61,16 @@
    
   }
   
+  @media (max-width: 844px) {
+    .cart-item img {
+
+        position: relative;
+  
+}
+
+.cart{
+    margin: 3rem;
+  }
+
+
+  }
