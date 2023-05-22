@@ -82,8 +82,5 @@ a > span:hover {
     height: 20px; /* Adjusted height for cart icon */
   }
   
-  .header__login {
-    margin-left: 0;
-    font-size: 1rem; /* Adjusted font size */
-  }
+  
 }

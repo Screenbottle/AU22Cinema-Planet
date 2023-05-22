@@ -115,7 +115,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 0.5rem;
   width: 100px;
+  
 
 }
 
@@ -126,13 +128,14 @@
 
 .trailerContainer {
 
-  max-width: 800px;
+  max-width: 400px;
   top: 0px;
   padding: 20px;
+  margin-bottom: 0;
 }
 
 .videoContainer {
-  height: 150px;
+  height: 250px;
   margin-right: 0px;
   display: flex;
   gap: 20px;
@@ -143,7 +146,7 @@
   
   flex: 0 0 auto; 
   position: relative;
-  width: 200px; 
+  width: 250px; 
   padding-bottom: 56.25%;
   height: 0;
 }
@@ -158,6 +161,7 @@
 }
 
 .comment-box {
+  margin: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -199,6 +203,7 @@ textarea {
   padding: 20px;
   margin-top: 10px;
   border-radius: 5px;
+ 
 }
 
 .comment-button {
@@ -226,7 +231,7 @@ textarea {
 @media (max-width: 844px) {
 
   .wrapper {
-    width: 78%;
+    width: 100%;
    
   }
   .container {
@@ -235,13 +240,14 @@ textarea {
   }
 
   .recMoviesContainer {
-    height: 130px; 
+    height: 150px; 
+    width: 300px;
   
   
   }
 
   .tittleContainer {
-    bottom: 50px; 
+    bottom: 70px; 
     margin-left: -40px;
   }
 
@@ -249,13 +255,13 @@ textarea {
    top: 0;
     position: absolute;
     width: 70px;
-    margin-left: 30px;  
+    margin-left: 50px;  
   }
 
   .info_detailRight {
-    height: 50px; 
-    width: 280px;
-    font-size: xx-small;
+    height: 100px; 
+    width: 300px;
+    font-size: small;
     margin-top: 120px;
     margin-left: 20px;
   }
@@ -263,7 +269,7 @@ textarea {
  
 
   .info_genres .info_genre{
-    font-size: xx-small;
+    font-size: x-small;
     width: 10px;
     margin: 1.25rem 0;
     margin: 2px;
@@ -280,6 +286,7 @@ textarea {
   .summaryText {
     margin-top: 0px; 
     font-size: 1rem; 
+    width: 300px;
   }
   
     .movieInfo {
@@ -291,8 +298,8 @@ textarea {
 
 
 .comment-box{
-  margin-top: 320px;
-  margin-left: 55px;
+  margin-top: 550px;
+  margin-left: 100px;
 }
 
     textarea {
@@ -311,6 +318,7 @@ textarea {
 
     .logo_heading{
     font-size: medium;
+     width: 70px;
  
     }
 
@@ -324,7 +332,23 @@ textarea {
 
     .logo_production{
     
-    margin-right: 80px;
+    margin-right: 150px;
+   
+    }
+
+    .trailerContainer {
+      position: absolute;
+      margin-top: 500px;
+      max-width: 300px;
+      right: -50px;
+    
+    
+    }
+    
+    .videoContainer {
+      height: 250px;
+         
+     
     }
 
 

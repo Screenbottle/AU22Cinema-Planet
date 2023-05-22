@@ -243,7 +243,7 @@ return (
                 <Link to={`/movie/${id}`}>
                   <img
                     src={`https://image.tmdb.org/t/p/original${backdrop_path}`}
-                    alt={mediaTitle}
+                    alt={mediaTitle} 
                   />
                   <div className="poster-overlay">
                     <h2>{mediaTitle}</h2>
