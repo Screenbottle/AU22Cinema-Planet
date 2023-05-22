@@ -1,11 +1,13 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import React, { useState } from 'react';
 import './Checkout.css';
+import { addToLibrary } from '../features/firestoreLibrary';
 
 
 const Checkout = () => {
  
   const dispatch = useDispatch();
+  const { cartItems} = useSelector((store) => store.cart);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -14,6 +16,7 @@ const Checkout = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    addToLibrary(cartItems);
 
     setName('');
     setEmail('');

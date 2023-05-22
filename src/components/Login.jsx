@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import { actions } from '../features/firebaseRedux';
 
 import './Login.css'; // import your custom CSS file
+import { getCart as getCartFS} from '../features/firestoreCart';
+import { addToCart } from '../features/cartSlice';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,13 +16,23 @@ const Login = () => {
   const [errorElement, setErrorElement] = useState(null);
   const dispatch = useDispatch();
 
+  const getCart = async () => {
+    const cart = await getCartFS();
+    if (cart.length) {
+      cart.forEach(item => {
+        dispatch(addToCart(item));
+      });
+    }
+  }
+
   const onLogin = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        dispatch(actions.setCurrentUser(user));
+        dispatch(actions.setCurrentUser(user.uid));
+        getCart();
         navigate('/');
         console.log(user);
       })
