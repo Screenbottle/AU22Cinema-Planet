@@ -19,7 +19,26 @@
   height: 400px;
 }
 
-login-form-container {
+
+
+@media (max-width: 768px) {
+
+  
+  .login-section {
+    width: 300px;
+    height: auto;
+    padding: 1rem;
+  }
+  
+  form input,
+  form button {
+    width: 100%;
+    max-width:250px; 
+  }
+}
+
+
+.login-form-container {
   display: flex;
   flex-direction: column;
   align-items: center;

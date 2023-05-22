@@ -132,6 +132,8 @@ const MovieDetails = () => {
   const trailerElements = createTrailers();
 
   return (
+
+    
     <div className="wrapper">
       <div className="container">
         <img
@@ -194,12 +196,26 @@ const MovieDetails = () => {
               <div className="summaryText">Summary</div>
               <div>{currentMovieDetail ? currentMovieDetail.overview : ""}
               </div>
+            
+
+              </div>
               <div className="trailerContainer">
                 <h2>Trailers</h2>
                 <div className="videoContainer">{trailerElements}</div>
               </div>
             </div>
-            <div>
+
+      </div>
+                  
+     
+            
+         
+          
+         
+        </div>
+
+ 
+            <div className="comment-box">
               <form onSubmit={handleSubmit}>
                 <label>
                   Comment:
@@ -215,9 +231,10 @@ const MovieDetails = () => {
               </form>
               <div className="comments">{renderComments()}</div>
             </div>
-            
-          </div>
-          <div className="logo_heading">Production companies</div>
+
+        <div>
+          
+        <div className="logo_heading">Production companies</div>
           <div className="logo_production">
             {currentMovieDetail &&
               currentMovieDetail.production_companies &&
@@ -238,9 +255,12 @@ const MovieDetails = () => {
                 </>
               ))}
           </div>
-        </div>
-      </div>
+          </div>
+
+        
     </div>
+
+    
   );
 };
 export default MovieDetails;
