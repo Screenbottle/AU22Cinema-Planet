@@ -2,6 +2,7 @@ import React from "react";
 import './Shoppingcart.css'
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart, removeItem } from "../features/cartSlice";
+import { removeItem as removeItemFS } from "../features/firestoreCart";
 import { Link } from "react-router-dom";
 
 const ShoppingCart = () => {
@@ -11,7 +12,12 @@ const ShoppingCart = () => {
   const dispatch = useDispatch();
   const { cartItems} = useSelector((store) => store.cart);
 
-  const total = cartItems.length*price
+  const total = cartItems.length*price;
+
+  const remove = (movie) => {
+    removeItemFS(movie);
+    dispatch(removeItem(movie));
+  }
     
 
 
@@ -41,7 +47,7 @@ const ShoppingCart = () => {
         <h4 className="item-price">${price}</h4>
         <button
           className="remove-btn"
-          onClick={() => dispatch(removeItem(movie))}
+          onClick={() => remove(movie)}
         >
           remove  
         </button>

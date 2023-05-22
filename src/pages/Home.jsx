@@ -7,6 +7,9 @@ import { auth } from '../firebase';
 import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cartSlice";
 import ShoppingCart from "../components/ShoppingCart";
+import { uploadItem } from "../features/firestoreCart";
+import { useSelector } from "react-redux";
+
 const Home = () => {
   const [popularMovies, setPopularMovies] = useState([]);
   const [genres, setGenres] = useState({});
@@ -15,6 +18,7 @@ const Home = () => {
   const [searchType, setSearchType] = useState("movie");
   const dispatch = useDispatch();
   const [sortOption, setSortOption] = useState("popularity");
+  const currentUser = useSelector((state) => state.user.currentUser);
 
   useEffect(() => {
     const API_KEY = "34a3a84e40cb412a83d35dc3d683b406";
@@ -151,8 +155,8 @@ return (
                   <p className="movie-info-item">Release Date: <span>{release_date}</span></p>
                   <p className="movie-info-item">Rating: <span><Rating rating={vote_average} /></span></p>
                   <p className="movie-info-item">Genres: <span>{genre_ids.map((id) => genres[id]).join(", ")}</span></p>
-                  <Link to={`/ShoppingCart`}onClick={()=> dispatch(addToCart(movie))}  >
-                    <a className="buy-now">
+                  <Link to={`/ShoppingCart`}  >
+                    <a className="buy-now" onClick={() => addItemToCart(movie)}>
                       <span><h2><img src="https://pngimg.com/uploads/plus/plus_PNG26.png" alt="Plus Icon" /> Buy Now</h2></span>
                     </a>
                   </Link>
@@ -166,6 +170,11 @@ return (
       </div>
     );
   };
+
+  const addItemToCart = (movie) => {
+    dispatch(addToCart(movie));
+    uploadItem(movie, currentUser);
+  }
   
   return (
 
