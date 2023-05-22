@@ -3,19 +3,26 @@
   padding: 2.5rem 0;
   align-items: center;
   display: flex;
-  height: 5px;
+  height: 5rem; /* Adjusted height for desktop */
 }
 
 @media only screen and (max-width: 600px) {
   .header {
     margin: 0 1rem;
     padding: 1rem 0;
-    height: 3px;
+    height: 3rem; /* Adjusted height for mobile */
   }
 }
-.headerLeft, .headerRight {
+
+.headerLeft {
   display: flex;
   align-items: center;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Move to the right side */
 }
 
 a > span {
@@ -38,11 +45,6 @@ a > span:hover {
   font-size: 2rem;
 }
 
-.headerRight {
-  display: flex;
-  align-items: center;
-}
-
 .header__cartIcon {
   height: 40px;
   object-fit: contain;
@@ -63,6 +65,3 @@ a > span:hover {
 .header__login:hover {
   color: red;
 }
-
-
-

@@ -65,9 +65,9 @@ const ShoppingCart = () => {
             total <span>${total}</span>
           </h4>
         </div>
-        <button className="btn clear-btn" onClick={()=>{dispatch(clearCart())}}>clear cart</button>
+        <button className="btn-clear" onClick={()=>{dispatch(clearCart())}}>clear cart</button>
         <Link to={'/checkout'}>
-        <button className="btn checkout-btn" >Checkout </button>
+        <button className="btn-checkout" >Checkout </button>
         </Link>
       </footer>
   
