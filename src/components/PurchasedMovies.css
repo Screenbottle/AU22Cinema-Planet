@@ -1,0 +1,48 @@
+.purchased-movies {
+  /* Existing styles for purchased-movies component */
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.purchased-movie-list {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 10px;
+margin-top: 30px;
+}
+
+.movie {
+  /* Existing styles for individual movie item */
+  width: calc(70% - 50px); /* Adjust the width as needed */
+  margin-bottom: 10px; /* Add margin between movie items */
+  background-color: #000000;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.movie-poster {
+  width: 100%;
+  height: auto;
+  object-fit: auto;
+  border-radius: 5px;
+}
+
+.movie-details {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.movie-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.movie-release-date,
+.movie-purchased-date {
+  font-size: 20px;
+  margin-top: 5px;
+  color: #888888;
+}

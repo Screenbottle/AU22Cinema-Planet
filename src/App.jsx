@@ -13,6 +13,7 @@ import { auth } from './firebase';
 import Checkout from './components/Checkout'
 import './App.css'
 import Login from './components/Login'
+import PurchasedMovies from './components/PurchasedMovies';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             <Login/>
           }>
           </Route>
+          <Route path='/purchased-movies' element={<PurchasedMovies />} ></Route>
         </Routes>
     </div>
   );
