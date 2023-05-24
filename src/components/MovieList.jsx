@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../features/cartSlice";
+import { uploadItem } from "../features/firestoreCart";
 
 const MovieList = () => {
   const [movieList, setMovieList] = useState([]);
   const [genres, setGenres] = useState([]);
   const { type } = useParams();
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.user.currentUser);
 
   useEffect(() => {
     getGenres();
@@ -41,6 +46,11 @@ const MovieList = () => {
       .join(", ");
   };
 
+  const addItemToCart = (movie) => {
+    dispatch(addToCart(movie));
+    uploadItem(movie, currentUser);
+  }
+
   const Rating = ({ rating }) => {
     const stars = Math.round(rating / 2);
     const emptyStars = 5 - stars;
@@ -72,8 +82,8 @@ const MovieList = () => {
           <p className="movie-info-item">Release Date:<span>{movie.release_date}</span></p>
           <p className="movie-info-item">Rating: <span> <Rating rating={movie.vote_average} /></span></p>
           <p className="movie-info-item">Genres: <span>{getGenresById(movie.genre_ids)}</span></p>
-          <Link to={``}>
-              <a class="buy-now">
+          <Link to={`/ShoppingCart`}>
+              <a class="buy-now" onClick={() => addItemToCart(movie)}>
               <span><h2><img src="https://pngimg.com/uploads/plus/plus_PNG26.png"/> Buy Now</h2></span>
               </a>
               </Link>

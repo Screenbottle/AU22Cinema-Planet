@@ -48,9 +48,12 @@ const Header = () => {
         <Link to="/movies/upcoming">
           <span>Upcoming</span>
         </Link>
-        <Link to="/purchased-movies"> 
-          <span>Purchased Movies</span>
-        </Link>
+        {currentUser ? (
+          <Link to="/purchased-movies"> 
+            <span>Purchased Movies</span>
+          </Link>
+        ) : null }
+        
 
 
     
